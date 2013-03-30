@@ -1,0 +1,8 @@
+Title      : Audio:Conexant Audio CX20705 (USB Dock) Driver
+Version    : A00
+OEM Name   : Conexant
+OEM Ver    : 1.8.78.0
+Computers  : Inspiron - 1090
+Oses       : Windows 7 32-bit Home Premium, 
+Languages  : Arabic, Brazilian Portuguese, Chinese, Chinese Hong Kong, Chinese-S, Chinese-T, Croatian, Czech, Danish, Dutch, English, English (UK), Finnish, French, German, Greek, Hebrew, Hungarian, Italian, Japanese, Korean, Norwegian, Polish, Romanian, Russian, Slovakian, Slovenian, Spanish, Swedish, Thai, Turkish
+Created    : Mon Dec 27 00:57:18 CST 2010

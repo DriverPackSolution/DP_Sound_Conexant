@@ -1,0 +1,9 @@
+Title      : Audio:Conexant Audio CX20671 Driver
+Version    : A01
+OEM Name   : Conexant
+OEM Ver    : 8.54.16.0
+Computers  : inspiron - N311z;
+Vostro Notebook - V131
+Oses       : Windows 7 32-bit Home Basic, Windows 7 32-bit Home Premium, Windows 7 32-bit Professional, Windows 7 32-bit Starter, Windows 7 32-bit Ultimate, Windows 7 64-bit Home BasicWindows 7 64-bit Home PremiumWindows 7 64-bit ProfessionalWindows 7 64-bit Ultimate
+Languages  : Arabic, Basque, Brazilian Portuguese, Chinese, Chinese Hong Kong, Chinese-S, Chinese-T, Croatian, Czech, Danish, Dutch, English, English (UK), Finnish, French, German, Greek, Hebrew, Hungarian, Iberian Portuguese, Italian, Japanese, Korean, Norwegian, Pan-Euro, Polish, Romanian, Russian, Slovakian, Slovenian, Spanish, Swedish, Thai, Turkish
+Created    : Wed Aug 3 03:25:13 CDT 2011

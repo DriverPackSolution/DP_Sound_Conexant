@@ -1,0 +1,8 @@
+Title      : Audio:Conexant CX20582 AUDIO Driver
+Version    : A01
+OEM Name   : Conexant
+OEM Ver    : 4.98.70.0
+Computers  : Inspiron Desktop - Inspiron One 19
+Oses       : Windows 7 64-bit Home Premium, 
+Languages  : Arabic, Brazilian Portuguese, Chinese-S, Chinese-T, Czech, Danish, Dutch, English, Finnish, French, German, Greek, Hebrew, Hungarian, Iberian Portuguese, Italian, Japanese, Korean, Norwegian, Polish, Russian, Spanish, Swedish, Turkish
+Created    : Sun Oct 25 21:24:43 CDT 2009

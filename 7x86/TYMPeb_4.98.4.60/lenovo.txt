@@ -1,0 +1,262 @@
+                     ================================
+                     Conexant Systems, Inc., (c) 2009
+		          All Rights Reserved.
+                     ================================
+
+=====================================================
+ReadMe file for Conexant High Definition Audio Driver
+=====================================================
+
+Contents:
+---------
+    1. Driver and Application(s) Installation
+    2. Driver and Application(s) Update
+    3. Driver and Application(s) Uninstallation
+    4. Accumulative information about audio driver/applications:
+       - List of new features/fixed issues
+       - List of files indicating:
+         * File name
+         * File version
+         * File size
+         * File date in <year>/<month>/<day> format
+
+Supported Operating Systems:
+----------------------------
+    Microsoft Windows XP       (x86/x64)
+    Windows Vista              (x86/x64)
+    Windows 7                  (x86/x64)
+
+Supported Conexant HD Audio Codecs:
+-----------------------------------
+    CX20549 
+    CX20561
+    CX2059x
+
+=====================================================
+Section 1. Driver and Application(s) Installation
+=====================================================
+Windows XP
+----------
+1. Click [Cancel] if Microsoft Windows XP detects a new 
+   'Audio Device on High Definition Audio Bus'.
+
+2. Run the Setup.exe program to start the installation/update of
+   the Conexant HD Audio device driver and application(s).
+
+3. Click [OK] in the "Device Driver Installation Wizard" window 
+   showing the Conexant HD Audio device and 
+   type of a task (INSTALL or UPGRADE).
+
+4. Click [OK] on the final window showing result of the
+   installation (SUCCESS or FAILURE) to complete the installation.
+
+Windows Vista/Windows 7
+-----------------------
+1. Run the Setup.exe program to start the installation/update of
+   the Conexant HD Audio device driver and application(s).
+
+2. If "User Account Control" window pops up asking permission to
+   start "Conexant Universal Device Install/Uninstall" program,
+   click [Yes] to continue installation. 
+
+3. Click [OK] in the "Device Driver Installation Wizard" window 
+   showing the Conexant HD Audio device and 
+   type of a task (INSTALL or UPGRADE).
+
+4. If Windows Secutity window pops up saying that "Windows can't 
+   verify the publisher of this driver software", select
+   "Install this driver software anyway" to continue instllation
+
+5. Click [OK] on the final window showing result of the
+   installation (SUCCESS or FAILURE) to complete the installation.
+
+
+Silent installation
+-------------------
+Use the 'setup /S' command line
+
+=====================================================
+Section 2. Driver and Application(s) Update
+=====================================================
+Windows XP
+----------
+Perform steps 2 to 4 from the Windows XP installation
+section. 
+
+Windows Vista/Windows 7
+-----------------------
+Perform steps 1 to 5 from the Windows Vista/Windows 7 
+installation section.
+
+
+=====================================================
+Section 3. Driver and Application(s) Uninstallation
+=====================================================
+Uninstallation of Conexant audio driver and application(s) is silent.
+
+
+Windows XP
+----------
+1. Launch "Control Panel" window by selecting "Start" -> 
+   "Settings" -> "Control Panel" menu option.
+
+2. Run "Add or Remove Programs" applet.
+
+3. On the "Add or Remove Programs" select the 
+   "Change or Remove Programs" view (default).
+
+4. Select the "Conexant HD Audio" entry and click [Change/Remove].
+
+5. Audio driver and accompanying applications are uninstalled silently.
+
+
+Windows Vista/Windows 7
+-----------------------
+1. Launch "Control Panel" window by selecting "Start" -> 
+   "Settings" -> "Control Panel" menu option
+
+2. Run "Programs and Features" applet.
+
+3. Select the "Conexant HD Audio" entry and either
+   - press the [Enter] key
+   or
+   - double click left mouse button
+   or
+   - select Uninstall/Change from mouse right click menu
+
+4. Audio driver and accompanying applications are uninstalled silently
+
+
+==========================================================================
+
+Release 3.66.11.0 (Windows XP)/4.98.4.60 (Windows 7)
+
+==========================================================================
+Supported Operating Systems:
+----------------------------
+    Microsoft Windows XP       (x86/x64) - Version 3.66.11.0
+    Windows 7                  (x86/x64) - Version 4.98.4.60
+
+New Features:
+=============
+Windows XP
+----------
+Initial release
+
+Windows 7
+---------
+Initial release
+
+Fixed issues:
+=============
+Windows XP
+----------
+- Use AIO skin for SmartAudio
+
+Windows 7
+---------
+- Use AIO skin for SmartAudio
+
+File Information:
+=================
+Windows 7, 32-bit
+-----------------
++--------------------------------+--------------+--------------+--------------+
+| File Name                      | Version      |         Size | Date         |
++--------------------------------+--------------+--------------+--------------+
+| CHDRT32.sys                    | 4.98.4.0     |      475,648 | 2009-06-15   |
+| CX32FP19.dll                   | 4.80.19.5    |    1,663,488 | 2009-06-22   |
+| DIFxAPI.dll                    | 2.1          |      319,968 | 2006-10-01   |
+| ISAPSII.ini                    |              |          195 | 2009-02-14   |
+| Setup.exe                      | 4.62.6.1     |    1,124,920 | 2009-07-01   |
+| TYMPebxa.inf                   |              |       95,125 | 2009-07-03   |
+| UCI32A41.dll                   | 2.0.41.0     |      258,048 | 2009-05-06   |
+| UIU32a.exe                     | 4.62.6.0     |    1,118,208 | 2009-07-01   |
+| tympebxa.cat                   |              |       30,464 | 2009-09-04   |
++--------------------------------+--------------+--------------+--------------+
+
+Windows 7, 64-bit
+-----------------
++--------------------------------+--------------+--------------+--------------+
+| File Name                      | Version      |         Size | Date         |
++--------------------------------+--------------+--------------+--------------+
+| CHDRT64.sys                    | 4.98.4.0     |      668,672 | 2009-06-15   |
+| CX64FP19.dll                   | 4.80.19.5    |    1,738,240 | 2009-06-22   |
+| DIFxAPI.dll                    | 2.1          |      524,768 | 2006-10-01   |
+| ISAPSII.ini                    |              |          195 | 2009-02-14   |
+| Setup64.exe                    | 4.62.6.1     |    1,418,808 | 2009-07-01   |
+| TYMPebwa.inf                   |              |       95,129 | 2009-07-03   |
+| UCI64A41.dll                   | 2.0.41.0     |      394,752 | 2009-05-06   |
+| UIU64a.exe                     | 4.62.6.0     |    1,412,608 | 2009-07-01   |
+| tympebwa.cat                   |              |       34,712 | 2009-09-04   |
++--------------------------------+--------------+--------------+--------------+
+
+SmartAudio (Windows 7)
+----------------------
++--------------------------------+--------------+--------------+--------------+
+| File Name                      | Version      |         Size | Date         |
++--------------------------------+--------------+--------------+--------------+
+| SA1Remove.ini                  |              |          396 | 2009-06-09   |
+| SA2TBAR.ini                    |              |          735 | 2009-04-21   |
+| SAII.ini                       |              |        5,125 | 2009-07-09   |
+| Setup.exe                      | 4.62.6.2     |    1,124,920 | 2009-07-01   |
+| BlueStream.wav                 |              |       56,858 | 2007-11-20   |
+| CXHDMI.dll                     | 1.8.0.0      |       10,752 | 2008-12-24   |
+| CxHDAudioAPI.dll               |              |      908,288 | 2009-07-01   |
+| Interop.CxHDAudioAPILib.dll    | 1.0.32.0     |       98,304 | 2009-07-01   |
+| LangDlls.cab                   |              |   18,025,521 | 2009-07-10   |
+| RedStream.wav                  |              |       57,484 | 2007-11-20   |
+| SAIICpl.exe                    | 6.0.13.0     |      307,768 | 2009-05-15   |
+| SmartAudio.AIO.dll             | 6.0.44.0     |    1,152,512 | 2009-07-10   |
+| SmartAudio.exe                 | 6.0.44.0     |      682,552 | 2009-07-10   |
+| setup64.exe                    | 4.62.6.2     |    1,418,808 | 2009-07-01   |
++--------------------------------+--------------+--------------+--------------+
+
+Windows XP, 32-bit
+------------------
++--------------------------------+--------------+--------------+--------------+
+| File Name                      | Version      |         Size | Date         |
++--------------------------------+--------------+--------------+--------------+
+| CHDAU32.sys                    | 3.66.11.0    |      818,176 | 2009-05-22   |
+| ISAPSII.ini                    |              |          195 | 2009-02-14   |
+| Setup.exe                      | 4.62.6.1     |    1,124,920 | 2009-07-01   |
+| TYMPeb5a.inf                   |              |       72,997 | 2009-07-03   |
+| UCI32A41.dll                   | 2.0.41.0     |      258,048 | 2009-05-06   |
+| UIU32a.exe                     | 4.62.6.0     |    1,118,208 | 2009-07-01   |
+| tympeb5a.cat                   |              |        8,636 | 2009-09-04   |
++--------------------------------+--------------+--------------+--------------+
+
+Windows XP, 64-bit
+------------------
++--------------------------------+--------------+--------------+--------------+
+| File Name                      | Version      |         Size | Date         |
++--------------------------------+--------------+--------------+--------------+
+| CHDAU64.sys                    | 3.66.11.0    |    1,037,312 | 2009-05-22   |
+| ISAPSII.ini                    |              |          195 | 2009-02-14   |
+| Setup64.exe                    | 4.62.6.1     |    1,418,808 | 2009-07-01   |
+| TYMPeb6a.inf                   |              |       73,013 | 2009-07-03   |
+| UCI64A41.dll                   | 2.0.41.0     |      394,752 | 2009-05-06   |
+| UIU64a.exe                     | 4.62.6.0     |    1,412,608 | 2009-07-01   |
+| tympeb6a.cat                   |              |        8,684 | 2009-09-04   |
++--------------------------------+--------------+--------------+--------------+
+
+SmartAudio (Windows XP)
+-----------------------
++--------------------------------+--------------+--------------+--------------+
+| File Name                      | Version      |         Size | Date         |
++--------------------------------+--------------+--------------+--------------+
+| SA1Remove.ini                  |              |          396 | 2009-06-09   |
+| SA2TBAR.ini                    |              |          735 | 2009-04-21   |
+| SAII.ini                       |              |        5,125 | 2009-07-09   |
+| Setup.exe                      | 4.62.6.2     |    1,124,920 | 2009-07-01   |
+| BlueStream.wav                 |              |       56,858 | 2007-11-20   |
+| CXHDMI.dll                     | 1.8.0.0      |       10,752 | 2008-12-24   |
+| CxHDAudioAPI.dll               |              |      908,288 | 2009-07-01   |
+| Interop.CxHDAudioAPILib.dll    | 1.0.32.0     |       98,304 | 2009-07-01   |
+| LangDlls.cab                   |              |   18,025,521 | 2009-07-10   |
+| RedStream.wav                  |              |       57,484 | 2007-11-20   |
+| SAIICpl.exe                    | 6.0.13.0     |      307,768 | 2009-05-15   |
+| SmartAudio.AIO.dll             | 6.0.44.0     |    1,152,512 | 2009-07-10   |
+| SmartAudio.exe                 | 6.0.44.0     |      682,552 | 2009-07-10   |
+| setup64.exe                    | 4.62.6.2     |    1,418,808 | 2009-07-01   |
++--------------------------------+--------------+--------------+--------------+

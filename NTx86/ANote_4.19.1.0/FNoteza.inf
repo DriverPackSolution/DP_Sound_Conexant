@@ -1,0 +1,886 @@
+;******************************************************************
+; Copyright (C) 1996-1998, Rockwell Semiconductor Systems, Inc.   
+; Copyright (C) 1999-2007, Conexant Systems Inc.                   
+;******************************************************************
+;    CVHDAPO.INF >> FNoteza.inf
+;
+;Abstract:
+;    INF file for installing the Conexant Function Driver for 
+;    Venice High Definition Audio Device
+;                               
+;******************************************************************
+
+[Version]
+Signature="$Windows NT$"
+Class=MEDIA
+ClassGuid={4d36e96c-e325-11ce-bfc1-08002be10318}
+Provider=Conexant
+CatalogFile = FNoteza.cat
+DriverVer = 05/24/2007, 4.19.1.0
+
+[DestinationDirs]
+DefaultDestDir      =10; dirid = \system32\drivers
+HdAudModel.Copyfiles =10,system32\drivers
+CoInstaller_CopyFiles=10,system32
+Uninstall.CopyFiles=16422,CONEXANT\%UIPATH%
+SfxFx.CopyList=11     ; %windir%\system32
+
+[SourceDisksNames]
+222=%DiskId1%,,,
+
+[SourceDisksFiles]
+CHDART.sys=222
+UIU32a.exe=222
+UCI32A19.dll=222
+CnxtAp32.dll=222
+;;CnxtPropPageExt.dll=222
+;;SysFxUI.dll=222
+
+[Manufacturer]
+Conexant=Conexant
+
+;============================================================================
+
+[ControlFlags]
+ExcludeFromSelect = HDAUDIO\FUNC_01&VEN_14F1&DEV_5045&SUBSYS_17AA3C2E
+[Conexant]
+%HdAudioFunctionDriver.Venice5045.DeviceDesc% = HdAudModel,HDAUDIO\FUNC_01&VEN_14F1&DEV_5045&SUBSYS_17AA3C2E 
+[HdAudModel.NT]
+Include=ks.inf,wdmaudio.inf
+Needs=KS.Registration,WDMAUDIO.Registration,mssysfx.CopyFilesAndRegister
+CopyFiles = HdAudModel.Copyfiles, Uninstall.CopyFiles, SfxFx.CopyList
+AddReg    = HdAudModel.AddReg, Oem.AddReg, HdAudInit.AddReg, Uninstall.AddReg
+
+;;AddProperty=OEMCustomBranding.AddProperty
+RegisterDlls=SfxFx.RegisterDlls
+
+;;[OEMCustomBranding.AddProperty]
+;;
+;; PKEY_AudioDevice_ControlPanelPageProvider, defined in [Strings] section
+;;
+;; %PKEY_AudioEndpoint_ControlPanelPageProvider%,1,18,,"{TODO:Property Page GUID}"
+
+;;
+;; PKEY_DriverPackage_BrandingIcon, could also use {CF73BB51-3ABF-44A2-85E0-9A3DC7A12132},7,,,"CnxtPropPageExt.dll,-200"
+;;
+;;DeviceBrandingIcon,,,,"%1%\CnxtPropPageExt.dll,-200"
+
+;;
+;; PKEY_DrvPkg_VendorWebSite, could also use {CF73BB51-3ABF-44A2-85E0-9A3DC7A12132},3,,,"http://www.microsoft.com/whdc/device/audio/default.mspx"
+;;
+;;DeviceVendorWebSite,,,,"http://www.microsoft.com/whdc/device/audio/default.mspx" ; Place your URL here
+
+[HdAudModel.NT.HW]
+AddReg = HdAudSecurity.AddReg
+
+[HdAudModel.NT.Services]
+AddService=HdAudAddService, 0x00000002, HdAud_Service_Install
+
+[HdAud_Service_Install]
+DisplayName   = %UAAFunctionDriverForHdAudio.SvcDesc%
+ServiceType   = 1
+StartType     = 3
+ErrorControl  = 1
+ServiceBinary = %10%\system32\drivers\CHDART.sys
+
+[Uninstall.CopyFiles]
+UIU32a.exe
+
+[HdAudModel.NT.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+UCI32A19.dll
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000,"UCI32A19.dll,CAUDCoInstaller"
+
+[Uninstall.AddReg]
+; Files to Delete...
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files\SYS,CHDART.sys,,"CHDART.sys"
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\RegKeys,"Software\Microsoft\Windows\CurrentVersion\Uninstall",,%UIPATH%
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%",DisplayName,,%HDAudioOEMFriendlyName%
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%",UninstallString,,%16422%\CONEXANT\%UIPATH%\UIU32a.exe -U -IFNoteza.inf
+
+[HdAudModel.Copyfiles]
+CHDART.sys
+
+[HdAudInit.AddReg]
+;; Sample Section to Illustrate the format for Initialization verbs.
+;; Uncomment and add appropriate verbs as needed.
+;; Note that the top nibble of the verb (Codec Address) must be '0'.
+;HKR,InitVerbs,NumVerbs,0x00010001, 0x00000004 ; Example: Number of verbs in the init section
+;HKR,InitVerbs,0000,    0x00010001, 0x01E71C01 ; Sets first byte of pin config info
+;HKR,InitVerbs,0001,    0x00010001, 0x01E71D44 ; Sets second byte of pin config info
+;HKR,InitVerbs,0002,    0x00010001, 0x01E71E21 ; Sets third byte of pin config info
+;HKR,InitVerbs,0003,    0x00010001, 0x01E71F00 ; Sets fourth byte of pin config info
+
+[HdAudModel.AddReg]
+HKR,,AssociatedFilters,,"wdmaud,swmidi,redbook"
+HKR,,Driver,,CHDART.sys
+HKR,,SSFriendlyName,,%RearLineOutWaveDeviceName%
+HKR,,CompanyName,,%CompanyName%
+HKR,,ProductName,,%ProductName%
+
+HKR,Drivers,SubClasses,,"wave,midi,mixer,aux"
+
+HKR,Drivers\wave\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\midi\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\mixer\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\aux\wdmaud.drv,Driver,,wdmaud.drv
+
+HKR,Drivers\wave\wdmaud.drv,Description,,%HdAudioDeviceDescription%
+HKR,Drivers\midi\wdmaud.drv,Description,,%HdAudioDeviceDescription%
+HKR,Drivers\mixer\wdmaud.drv,Description,,%HdAudioDeviceDescription%
+HKR,Drivers\aux\wdmaud.drv,Description,,%HdAudioDeviceDescription%
+
+;;disable SetupPreferredAudioDevices, this will pick up SPDIF as default
+;;HKR,,SetupPreferredAudioDevices,3,01,00,00,00
+HKR,,DisableSetupDiChangeState,1,00,00,00,00 ; Set to 01,00,00,00 to disable proppage restarting of driver on policy change
+; Driver global settings
+HKR,GlobalSettings,DcOffsetWorkaround,1,01,00,00,00 ; Applies workaround for recording DC offset issue
+HKR,GlobalSettings,ResetAudioFgOnStart,1,00,00,00,00 ; Enables resetting of audio FG on driver start
+HKR,GlobalSettings,SysAudioTopoMiniportWorkaround,1,01,00,00,00 ; Enables holding ref on topo port & miniport when device is uninstantiated
+
+HKR,GlobalSettings,ValidateCodecWrites,1,00,00,00,00 ; Enables readback of writes to codec registers
+HKR,GlobalSettings,SendFakePcxCfgDefVerbs,1,00,00,00,00 ; Enables sending fake pin config default table
+HKR,GlobalSettings,SpdifOutputEchosRearRenderWhenNoAc3,1,00,00,00,00 ; Slaves rear panel front channels to SPDIF
+HKR,GlobalSettings,HpShutsOffRearSpeaker,1,00,00,00,00 ; Headphone does not mute rear speakers
+HKR,GlobalSettings,HpMode,1,01,00,00,00 ; Headphone is slaved to rear panel front channels
+HKR,GlobalSettings,EnableDynamicDevices,1,00,00,00,00 ; Headphone will come and go dynamically.
+HKR,GlobalSettings,SetSpdifVCfg,1,01,00,00,00 ;  VCfg bit will be set on SPDIF out
+HKR,GlobalSettings,MaxLatencyInMS,1,FF,00,00,00 ; Max Latency Supported in MS
+HKR,GlobalSettings,MaxAc3LatencyInMS,1,19,00,00,00 ; Max Latency for AC3 Streams in MS: 0x19 is 25MS
+HKR,GlobalSettings,StartDelayInMS,1,0A,00,00,00 ; Stream Startup Delay in MS
+HKR,GlobalSettings,MaxReadAheadInMS,1,0A,00,00,00 ; Max amount of data to read ahead in a directsound buffer
+HKR,GlobalSettings,MaxKmixerReadAheadInMS,1,28,00,00,00 ; Max amount of data to read ahead in a Kmixer buffer
+
+HKR,GlobalSettings\\SpdifOut,ExternalSpdifReceiverSupportedSampleRates44100,1,00,00,00,00 ; By default, not supported
+HKR,GlobalSettings\\SpdifOut,ExternalSpdifReceiverSupportedSampleRates48000,1,01,00,00,00 ; By default, only one supported
+HKR,GlobalSettings\\SpdifOut,ExternalSpdifReceiverSupportedSampleRates96000,1,00,00,00,00 ; By default, not supported
+
+HKR,GlobalSettings\\SpdifOut,ExternalSpdifReceiverSupportedBitDepths16,1,01,00,00,00 ; By default, only one supported
+HKR,GlobalSettings\\SpdifOut,ExternalSpdifReceiverSupportedBitDepths20,1,00,00,00,00 ; By default, not supported
+HKR,GlobalSettings\\SpdifOut,ExternalSpdifReceiverSupportedBitDepths24,1,00,00,00,00 ; By default, not supported
+HKR,GlobalSettings\\SpdifOut,ExternalSpdifReceiverSupportedBitDepths32,1,00,00,00,00 ; By default, not supported
+
+HKR,GlobalSettings\\SpdifIn,SpdifInputBitDepth,1,00,00,00,00 ; By default, 16 bit digital capture
+HKR,GlobalSettings\\SpdifIn,SpdifInputSampleRate,1,01,00,00,00; By default, 48KHz digital capture
+
+HKR,PowerSettings,ConservationIdleTime,1,1e,00,00,00
+HKR,PowerSettings,PerformanceIdleTime,1,2c,01,00,00
+HKR,PowerSettings,IdlePowerState,1,04,00,00,00
+
+;AmpControl
+HKR,Settings\AmpControl,AmpControlOptions,1,E9,E8,00,01
+HKR,Settings\AmpControl,AmpControlPortOptions,1,64,00,00,00
+
+[Oem.AddReg]
+HKR,Settings\OEM,Flags,1,33,19,01,7b
+HKR,Settings\OEM,Flags2,1,22,00,F4,03
+HKR,Settings\OEM,Flags3,1,82,00,00,00
+HKR,Settings\OEM,PortsCap,1,00,27,27,00
+HKR,Settings\OEM,EqProfile,1,00,00,00,00
+HKR,Settings\OEM,NumOfSoftStream,1,01,01,00,00
+HKR,Settings\OEM,DefaultGain,1,13,00,2B,14,00,00,00,00
+HKR,Settings\OEM,BeamWidth,1,5b,00,14,00 ; Beam Width and Mic Array Seperation
+HKR,Settings\OEM,DefaultAECMicHighLevel,1,00,00,18,00
+HKR,Settings\OEM\DefaultJack,Wid10,1,01,02,01,00
+HKR,Settings\OEM\DefaultJack,Wid11,1,02,02,00,00
+HKR,Settings\OEM\DefaultJack,Wid12,1,0a,01,01,00
+HKR,Settings\OEM\DefaultJack,Wid14,1,0a,01,00,00
+HKR,Settings\OEM\InitialSliderPosition,InitialMasterPlaybackPos,1,C9,7A,F8,FF
+HKR,Settings\OEM\InitialSliderPosition,InitialLineInPlaybackPos,1,C9,7A,04,00
+HKR,Settings\OEM\InitialSliderPosition,InitialMicPlaybackPos,1,C9,7A,04,00
+HKR,Settings\OEM\InitialSliderPosition,InitialWaveOutMixCapturePos,1,C9,7A,1C,00
+HKR,Settings\OEM\InitialSliderPosition,InitialAuxCapturePos,1,C9,FA,0E,00
+HKR,Settings\OEM\InitialSliderPosition,InitialLineInCapturePos,1,C9,7A,10,00
+HKR,Settings\OEM\InitialSliderPosition,InitialMicCapturePos,1,C9,7A,1C,00
+HKR,Settings\OEM\InitialSliderPosition,InitialCDCapturePos,1,C9,7A,1C,00
+
+;default Min for Venice is 0x00000000(0dB), default Max for Venice is 0x228000(+34.5dB)
+;default Min for Waikiki is 0x00000000(0dB), default Max for Waikiki is 0x150000(+21dB)
+;note 0x10000=1dB, 0x8000=0.5dB
+HKR,Settings\OEM\MicInRange,DedicatedExternalMicInMin,1,00,00,00,00
+HKR,Settings\OEM\MicInRange,DedicatedExternalMicInMax,1,00,80,22,00
+HKR,Settings\OEM\MicInRange,DedicatedInternalMicInMin,1,00,00,00,00
+HKR,Settings\OEM\MicInRange,DedicatedInternalMicInMax,1,00,80,22,00
+HKR,Settings\OEM\MicInRange,PortAMicInMin,1,00,00,00,00
+HKR,Settings\OEM\MicInRange,PortAMicInMax,1,00,80,22,00
+HKR,Settings\OEM\MicInRange,PortBMicInMin,1,00,00,00,00
+HKR,Settings\OEM\MicInRange,PortBMicInMax,1,00,80,22,00
+HKR,Settings\OEM\MicInRange,PortCMicInMin,1,00,00,00,00	;Venice doesn't have portC
+HKR,Settings\OEM\MicInRange,PortCMicInMax,1,00,80,22,00	;Venice doesn't have portC
+
+HKR,Settings\OEM\LineInRange,PortALineInMin,1,00,00,00,00
+HKR,Settings\OEM\LineInRange,PortALineInMax,1,00,80,22,00
+HKR,Settings\OEM\LineInRange,PortBLineInMin,1,00,00,00,00
+HKR,Settings\OEM\LineInRange,PortBLineInMax,1,00,80,22,00
+HKR,Settings\OEM\LineInRange,PortCLineInMin,1,00,00,00,00	;Venice doesn't have portC
+HKR,Settings\OEM\LineInRange,PortCLineInMax,1,00,80,22,00	;Venice doesn't have portC
+
+HKR,Settings\OEM\CDWaveInRange,DedicatedCDInMin,1,00,00,00,00
+HKR,Settings\OEM\CDWaveInRange,DedicatedCDInMax,1,00,80,22,00
+HKR,Settings\OEM\CDWaveInRange,DedicatedWaveInMin,1,00,00,A0,FF
+HKR,Settings\OEM\CDWaveInRange,DedicatedWaveInMax,1,00,00,0C,00
+
+;    64 = 100% of the volume possible,etc...
+;    32 = 50% of the volume possible,etc...
+HKR,Settings\OEM\FlexSettings,Flex_MasterPlaybackVolume,0x00000001,64,00,00,00
+HKR,Settings\OEM\FlexSettings,Flex_LineInPlaybackVolume,0x00000001,64,00,00,00
+HKR,Settings\OEM\FlexSettings,Flex_MicPlaybackVolume,0x00000001,64,00,00,00
+HKR,Settings\OEM\FlexSettings,Flex_CDPlaybackVolume,0x00000001,2D,00,00,00
+HKR,Settings\OEM\FlexSettings,Flex_WaveOutMixCaptureVolume,0x00000001,64,00,00,00
+HKR,Settings\OEM\FlexSettings,Flex_AuxCaptureVolume,0x00000001,64,00,00,00
+HKR,Settings\OEM\FlexSettings,Flex_LineInCaptureVolume,0x00000001,64,00,00,00
+HKR,Settings\OEM\FlexSettings,Flex_MicCaptureVolume,0x00000001,64,00,00,00
+HKR,Settings\OEM\FlexSettings,Flex_CDCaptureVolume,0x00000001,64,00,00,00
+
+; PortRules changed to ULONGLONG, 64bits
+HKR,Settings\PortRules,NumOfRules,1,02,00,00,00
+HKR,Settings\PortRules,PortRules,1,\
+11,41,4F,4F,4F,00,00,00,\
+11,71,52,4F,4F,00,00,00
+
+;; Settings for system effect begins
+;;
+;; All FX\\0 entries in the same grouping
+;;
+[RenderSysFx.AddReg]
+HKR,"FX\\0",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+;;HKR,"FX\\0",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_FX_PreMixClsid%,,%FX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\0",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+HKR,"FX\\0",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_Association%,,%KSNODETYPE_ANY%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+
+[RenderSPKSysFx.AddReg]
+HKR,"FX\\0",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+;;HKR,"FX\\0",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_FX_PreMixClsid%,,%FX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\0",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+HKR,"FX\\0",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\0",%PKEY_Endpoint_ID%, %REG_DWORD%, 0x0010
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX_BEAMFORMING%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX_AEC%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_GFX%, %REG_DWORD%, 0x0001
+HKR,"FX\\0",%PKEY_AudioEndpoint_Disable_SysFx%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_SYSFX_Association%,,%KSNODETYPE_SPEAKER%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+
+[RenderHPSysFx.AddReg]
+HKR,"FX\\0",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+;;HKR,"FX\\0",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_FX_PreMixClsid%,,%FX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\0",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+HKR,"FX\\0",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\0",%PKEY_Endpoint_ID%, %REG_DWORD%, 0x0050
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX_BEAMFORMING%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX_AEC%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_GFX%, %REG_DWORD%, 0x0001
+HKR,"FX\\0",%PKEY_AudioEndpoint_Disable_SysFx%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_SYSFX_Association%,,%KSNODETYPE_HEADPHONES%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+
+[RenderSPDIFSysFx.AddReg]
+HKR,"FX\\0",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+;;HKR,"FX\\0",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_FX_PreMixClsid%,,%FX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\0",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+HKR,"FX\\0",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\0",%PKEY_Endpoint_ID%, %REG_DWORD%, 0x0020
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX_BEAMFORMING%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX_AEC%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_GFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_AudioEndpoint_Disable_SysFx%, %REG_DWORD%, 0x0001
+HKR,"FX\\0",%PKEY_SYSFX_Association%,,%KSNODETYPE_SPDIF_INTERFACE%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+
+[VeniceCaptureSysFx.AddReg]
+HKR,"FX\\0",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+HKR,"FX\\0",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+;;HKR,"FX\\0",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\0",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+;;HKR,"FX\\0",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\0",%PKEY_Endpoint_ID%, %REG_DWORD%, 0x0030
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX_BEAMFORMING%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_LFX_AEC%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_Endpoint_Enable_GFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_AudioEndpoint_Disable_SysFx%, %REG_DWORD%, 0x0000
+HKR,"FX\\0",%PKEY_SYSFX_Association%,,%KSNODETYPE_MICROPHONE%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+HKR,"FX\\1",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+HKR,"FX\\1",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+;;HKR,"FX\\1",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\1",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+;;HKR,"FX\\1",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\1",%PKEY_Endpoint_ID%, %REG_DWORD%, 0x0040
+HKR,"FX\\1",%PKEY_Endpoint_Enable_LFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\1",%PKEY_Endpoint_Enable_LFX_BEAMFORMING%, %REG_DWORD%, 0x0000
+HKR,"FX\\1",%PKEY_Endpoint_Enable_LFX_AEC%, %REG_DWORD%, 0x0000
+HKR,"FX\\1",%PKEY_Endpoint_Enable_GFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\1",%PKEY_AudioEndpoint_Disable_SysFx%, %REG_DWORD%, 0x0000
+HKR,"FX\\1",%PKEY_SYSFX_Association%,,%KSNODETYPE_LINE_CONNECTOR%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+
+HKR,"FX\\2",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+HKR,"FX\\2",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+;;HKR,"FX\\2",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\2",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+;;HKR,"FX\\2",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\2",%PKEY_Endpoint_ID%, %REG_DWORD%, 0x0060
+HKR,"FX\\2",%PKEY_Endpoint_Enable_LFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\2",%PKEY_Endpoint_Enable_LFX_BEAMFORMING%, %REG_DWORD%, 0x0000
+HKR,"FX\\2",%PKEY_Endpoint_Enable_LFX_AEC%, %REG_DWORD%, 0x0000
+HKR,"FX\\2",%PKEY_Endpoint_Enable_GFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\2",%PKEY_AudioEndpoint_Disable_SysFx%, %REG_DWORD%, 0x0000
+HKR,"FX\\2",%PKEY_SYSFX_Association%,,%KSCATEGORY_AUDIO%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+HKR,"FX\\3",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+HKR,"FX\\3",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+;;HKR,"FX\\3",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\3",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+;;HKR,"FX\\3",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\3",%PKEY_Endpoint_ID%, %REG_DWORD%, 0x0030
+HKR,"FX\\3",%PKEY_Endpoint_Enable_LFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\3",%PKEY_Endpoint_Enable_LFX_BEAMFORMING%, %REG_DWORD%, 0x0000
+HKR,"FX\\3",%PKEY_Endpoint_Enable_LFX_AEC%, %REG_DWORD%, 0x0000
+HKR,"FX\\3",%PKEY_Endpoint_Enable_GFX%, %REG_DWORD%, 0x0000
+HKR,"FX\\3",%PKEY_AudioEndpoint_Disable_SysFx%, %REG_DWORD%, 0x0000
+HKR,"FX\\3",%PKEY_SYSFX_Association%,,%KSNODETYPE_MICROPHONE_ARRAY%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+
+[CaptureSysFx.AddReg]
+HKR,"FX\\0",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+HKR,"FX\\0",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+;;HKR,"FX\\0",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+;;HKR,"FX\\0",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+;;HKR,"FX\\0",%PKEY_FX_UiClsid%,,%FX_UI_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_Association%,,%KSNODETYPE_ANY%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+;;
+;; All EP\\0 entries in the same grouping
+;;
+;; Set default format to 48kHz, 16-bit, Stereo
+;;
+;;[OEMDefaultFormatOverride.AddReg]
+;;HKR,"EP\\0", %PKEY_AudioEndpoint_Association%,,%KSNODETYPE_SPEAKER%
+;;HKR,"EP\\0", %PKEY_AudioEngine_OEMFormat%, %REG_BINARY%, ;;41,00,8C,70,28,00,00,00,FE,FF,02,00,80,BB,00,00,00,EE,02,00,04,00,10,00,16,00,10,00,03,00,00,00,01,00,00,00,00,00,10,00,80,00,00,AA,00,38,9B,71
+
+;;
+;; Copy custom SYSFX and property page
+;;
+[SfxFx.CopyList]
+CnxtAp32.dll,,,0x0004
+;;CnxtPropPageExt.dll,,,0x0004
+;;SysFxUI.dll,,,0x0004
+
+;;
+;; Register custom SYSFX and property page
+;;
+[SfxFx.RegisterDlls]
+11,,CnxtAp32.dll,1
+;;11,,CnxtPropPageExt.dll,1
+;;11,,SysFxUI.dll,1
+ 
+;; Settings for system effect ends
+
+[HdAudModel.NT.Interfaces]
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_RearLineOutWave%, HdAudModel.RearLineOutWave
+AddInterface=%KSCATEGORY_RENDER%,%KSNAME_RearLineOutWave%, HdAudModel.RearLineOutWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_RearLineOutTopo%, HdAudModel.RearLineOutTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_RearLineOutTopo%, HdAudModel.RearLineOutTopo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_RearLineInWave%, HdAudModel.RearLineInWave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_RearLineInWave%, HdAudModel.RearLineInWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_RearLineInTopo%, HdAudModel.RearLineInTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_RearLineInTopo%, HdAudModel.RearLineInTopo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_FrontPanelHeadphoneWave%, HdAudModel.FrontPanelHeadphoneWave
+AddInterface=%KSCATEGORY_RENDER%,%KSNAME_FrontPanelHeadphoneWave%, HdAudModel.FrontPanelHeadphoneWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_FrontPanelHeadphoneTopo%, HdAudModel.FrontPanelHeadphoneTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_FrontPanelHeadphoneTopo%, HdAudModel.FrontPanelHeadphoneTopo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_FrontPanelMicWave%, HdAudModel.FrontPanelMicWave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_FrontPanelMicWave%, HdAudModel.FrontPanelMicWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_FrontPanelMicTopo%, HdAudModel.FrontPanelMicTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_FrontPanelMicTopo%, HdAudModel.FrontPanelMicTopo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_DigitalOutputWave%, HdAudModel.DigitalOutputWave
+AddInterface=%KSCATEGORY_RENDER%,%KSNAME_DigitalOutputWave%, HdAudModel.DigitalOutputWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_DigitalOutputTopo%, HdAudModel.DigitalOutputTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_DigitalOutputTopo%, HdAudModel.DigitalOutputTopo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_DigitalInputWave%, HdAudModel.DigitalInputWave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_DigitalInputWave%, HdAudModel.DigitalInputWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_DigitalInputTopo%, HdAudModel.DigitalInputTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_DigitalInputTopo%, HdAudModel.DigitalInputTopo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_MicArrayWave%, HdAudModel.MicArrayWave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_MicArrayWave%, HdAudModel.MicArrayWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_MicArrayTopo%, HdAudModel.MicArrayTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_MicArrayTopo%, HdAudModel.MicArrayTopo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_AuxInWave%, AzAudModel.AuxInWave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_AuxInWave%, AzAudModel.AuxInWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_AuxInTopo%, AzAudModel.AuxInTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_AuxInTopo%, AzAudModel.AuxInTopo
+
+;
+; Independent microphone interfaces. Up to 5 are supported.
+;
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicInWave%, HdAudModel.IndependentMicWave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_eMicInWave%, HdAudModel.IndependentMicWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicInTopo%, HdAudModel.IndependentMicTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_eMicInTopo%, HdAudModel.IndependentMicTopo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicIn2Wave%, HdAudModel.IndependentMic2Wave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_eMicIn2Wave%, HdAudModel.IndependentMic2Wave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicIn2Topo%, HdAudModel.IndependentMic2Topo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_eMicIn2Topo%, HdAudModel.IndependentMic2Topo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicIn3Wave%, HdAudModel.IndependentMic3Wave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_eMicIn3Wave%, HdAudModel.IndependentMic3Wave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicIn3Topo%, HdAudModel.IndependentMic3Topo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_eMicIn3Topo%, HdAudModel.IndependentMic3Topo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicIn4Wave%, HdAudModel.IndependentMic4Wave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_eMicIn4Wave%, HdAudModel.IndependentMic4Wave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicIn4Topo%, HdAudModel.IndependentMic4Topo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_eMicIn4Topo%, HdAudModel.IndependentMic4Topo
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicIn5Wave%, HdAudModel.IndependentMic5Wave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_eMicIn5Wave%, HdAudModel.IndependentMic5Wave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicIn5Topo%, HdAudModel.IndependentMic5Topo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_eMicIn5Topo%, HdAudModel.IndependentMic5Topo
+
+;
+; Mic Array interfaces. By design, only one is supported
+;
+
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicArrayWave%, HdAudModel.MicArrayWave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_eMicArrayWave%, HdAudModel.MicArrayWave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eMicArrayTopo%, HdAudModel.MicArrayTopo
+AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_eMicArrayTopo%, HdAudModel.MicArrayTopo
+
+; Rear line out
+[HdAudModel.RearLineOutWave]
+AddReg = HdAudModel.RearLineOutWave.AddReg
+
+[HdAudModel.RearLineOutWave.AddReg]
+HKR,,FriendlyName,,%RearLineOutWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+;HKR,,FriendlyName,,%RearLineOutDacName%
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;IntHdAudGuid.RearLineOutDac
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidRearLineOutDac%,Name,,%RearLineOutDacName%
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidRearLineOutDac%,Display,1,00,00,00,00
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidDisableDigitalOutput%,Name,,%DisableDigitalOutputName%
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidDisableDigitalOutput%,Display,1,00,00,00,00
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidFrontHPOutDac%,Name,,%FrontHPOutDacName%
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidFrontHPOutDac%,Display,1,00,00,00,00
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidDigitalSpeaker%,Name,,%DigitalSpeakerName%
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidDigitalSpeaker%,Display,1,00,00,00,00
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidMicDockingSelect%,Name,,%MicDockingSelectName%
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidMicDockingSelect%,Display,1,00,00,00,00
+
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidWaveOutMix%,Display,1,00,00,00
+HKLM,SYSTEM\CurrentControlSet\Control\MediaCategories\%HdAudGuidWaveOutMix%,Name,,%WaveOutMixName%
+
+[HdAudModel.RearLineOutTopo]
+AddReg = HdAudModel.RearLineOutTopo.AddReg, RenderSPKSysFx.AddReg
+
+[HdAudModel.RearLineOutTopo.AddReg]
+HKR,,FriendlyName,,%RearLineOutTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; Rear line in
+
+[HdAudModel.RearLineInWave]
+AddReg = HdAudModel.RearLineInWave.AddReg
+
+[HdAudModel.RearLineInWave.AddReg]
+HKR,,FriendlyName,,%RearLineInWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+[HdAudModel.RearLineInTopo]
+AddReg = HdAudModel.RearLineInTopo.AddReg, VeniceCaptureSysFx.AddReg
+
+[HdAudModel.RearLineInTopo.AddReg]
+HKR,,FriendlyName,,%RearLineInTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; Front panel headphone
+
+[HdAudModel.FrontPanelHeadphoneWave]
+AddReg = HdAudModel.FrontPanelHeadphoneWave.AddReg
+
+[HdAudModel.FrontPanelHeadphoneWave.AddReg]
+HKR,,FriendlyName,,%FrontPanelHeadphoneWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+[HdAudModel.FrontPanelHeadphoneTopo]
+AddReg = HdAudModel.FrontPanelHeadphoneTopo.AddReg, RenderHPSysFx.AddReg
+
+[HdAudModel.FrontPanelHeadphoneTopo.AddReg]
+HKR,,FriendlyName,,%FrontPanelHeadphoneTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; Front panel mic
+
+[HdAudModel.FrontPanelMicWave]
+AddReg = HdAudModel.FrontPanelMicWave.AddReg
+
+[HdAudModel.FrontPanelMicWave.AddReg]
+HKR,,FriendlyName,,%FrontPanelMicWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+[HdAudModel.FrontPanelMicTopo]
+AddReg = HdAudModel.FrontPanelMicTopo.AddReg, CaptureSysFx.AddReg
+
+[HdAudModel.FrontPanelMicTopo.AddReg]
+HKR,,FriendlyName,,%FrontPanelMicTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; Digital output
+
+[HdAudModel.DigitalOutputWave]
+AddReg = HdAudModel.DigitalOutputWave.AddReg
+
+[HdAudModel.DigitalOutputWave.AddReg]
+HKR,,FriendlyName,,%DigitalOutputWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+[HdAudModel.DigitalOutputTopo]
+AddReg = HdAudModel.DigitalOutputTopo.AddReg, RenderSPDIFSysFx.AddReg
+
+[HdAudModel.DigitalOutputTopo.AddReg]
+HKR,,FriendlyName,,%DigitalOutputTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; Digital input
+
+[HdAudModel.DigitalInputWave]
+AddReg = HdAudModel.DigitalInputWave.AddReg
+
+[HdAudModel.DigitalInputWave.AddReg]
+HKR,,FriendlyName,,%DigitalInputWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+[HdAudModel.DigitalInputTopo]
+AddReg = HdAudModel.DigitalInputTopo.AddReg
+
+[HdAudModel.DigitalInputTopo.AddReg]
+HKR,,FriendlyName,,%DigitalInputTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; Microphone Array
+
+[HdAudModel.MicArrayWave]
+AddReg = HdAudModel.MicArrayWave.AddReg
+
+[HdAudModel.MicArrayWave.AddReg]
+HKR,,FriendlyName,,%MicArrayWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+[HdAudModel.MicArrayTopo]
+AddReg = HdAudModel.MicArrayTopo.AddReg, CaptureSysFx.AddReg
+
+[HdAudModel.MicArrayTopo.AddReg]
+HKR,,FriendlyName,,%MicArrayTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; Auxiliary Input
+
+[AzAudModel.AuxInWave]
+AddReg = AzAudModel.AuxInWave.AddReg
+
+[AzAudModel.AuxInWave.AddReg]
+HKR,,FriendlyName,,%AuxInWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+[AzAudModel.AuxInTopo]
+AddReg = AzAudModel.AuxInTopo.AddReg
+
+[AzAudModel.AuxInTopo.AddReg]
+HKR,,FriendlyName,,%AuxInTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+;
+; Mic In Model & Add Reg. Up to 5 Instances supported
+;
+
+; 1st instance
+[HdAudModel.IndependentMicWave]
+AddReg = HdAudModel.IndependentMicWave.AddReg
+[HdAudModel.IndependentMicWave.AddReg]
+HKR,,FriendlyName,,%IndependentMicWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+[HdAudModel.IndependentMicTopo]
+AddReg = HdAudModel.IndependentMicTopo.AddReg, CaptureSysFx.AddReg
+[HdAudModel.IndependentMicTopo.AddReg]
+HKR,,FriendlyName,,%IndependentMicTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; 2nd instance of Mic In
+[HdAudModel.IndependentMic2Wave]
+AddReg = HdAudModel.IndependentMic2Wave.AddReg
+[HdAudModel.IndependentMic2Wave.AddReg]
+HKR,,FriendlyName,,%IndependentMic2WaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+[HdAudModel.IndependentMic2Topo]
+AddReg = HdAudModel.IndependentMic2Topo.AddReg, CaptureSysFx.AddReg
+[HdAudModel.IndependentMic2Topo.AddReg]
+HKR,,FriendlyName,,%IndependentMic2TopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; 3rd instance of Mic In
+[HdAudModel.IndependentMic3Wave]
+AddReg = HdAudModel.IndependentMic3Wave.AddReg
+[HdAudModel.IndependentMic3Wave.AddReg]
+HKR,,FriendlyName,,%IndependentMic3WaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+[HdAudModel.IndependentMic3Topo]
+AddReg = HdAudModel.IndependentMic3Topo.AddReg, CaptureSysFx.AddReg
+[HdAudModel.IndependentMic3Topo.AddReg]
+HKR,,FriendlyName,,%IndependentMic3TopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; 4th instance of Mic In
+[HdAudModel.IndependentMic4Wave]
+AddReg = HdAudModel.IndependentMic4Wave.AddReg
+[HdAudModel.IndependentMic4Wave.AddReg]
+HKR,,FriendlyName,,%IndependentMic4WaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+[HdAudModel.IndependentMic4Topo]
+AddReg = HdAudModel.IndependentMic4Topo.AddReg, CaptureSysFx.AddReg
+[HdAudModel.IndependentMic4Topo.AddReg]
+HKR,,FriendlyName,,%IndependentMic4TopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+; 5th instance of Mic In
+[HdAudModel.IndependentMic5Wave]
+AddReg = HdAudModel.IndependentMic5Wave.AddReg
+[HdAudModel.IndependentMic5Wave.AddReg]
+HKR,,FriendlyName,,%IndependentMic5WaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+[HdAudModel.IndependentMic5Topo]
+AddReg = HdAudModel.IndependentMic5Topo.AddReg, CaptureSysFx.AddReg
+[HdAudModel.IndependentMic5Topo.AddReg]
+HKR,,FriendlyName,,%IndependentMic5TopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+;
+; Microphone Array Model and AddReg. 1 Instance supported
+;
+
+[HdAudModel.MicArrayWave]
+AddReg = HdAudModel.MicArrayWave.AddReg
+[HdAudModel.MicArrayWave.AddReg]
+HKR,,FriendlyName,,%MicArrayWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+[HdAudModel.MicArrayTopo]
+AddReg = HdAudModel.MicArrayTopo.AddReg, CaptureSysFx.AddReg
+[HdAudModel.MicArrayTopo.AddReg]
+HKR,,FriendlyName,,%MicArrayTopoDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+[HdAudSecurity.AddReg]
+; FILE_DEVICE_SOUND
+HKR,,DeviceType,0x10001,0x0000001D
+; SDDL_DEVOBJ_SYS_ALL_ADM_RWX_WORLD_RWX_RES_RWX
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GRGWGX;;;BA)(A;;GRGWGX;;;WD)(A;;GRGWGX;;;RC)"
+
+[Strings]
+CompanyName = "Conexant"
+ProductName = "Conexant High Definition Audio Venice fx"
+VersionInfo = "4.19.1.0"
+
+DiskId1 = "Conexant High Definition Audio Installation Disk" ; {PlaceHolder="UAA","High Definition Audio"}
+
+HdAudioFunctionDriver.Venice5045.DeviceDesc = "Conexant High Definition Audio" ; {PlaceHolder="UAA","High Definition Audio"}
+
+UAAFunctionDriverForHdAudio.SvcDesc = "Microsoft UAA Function Driver for High Definition Audio Service" ; {PlaceHolder="UAA","High Definition Audio"}
+
+;;use one name, we are not supporting dynamic subdevices
+HDAudioOEMFriendlyName   = "Conexant HD Audio"
+RearLineOutWaveDeviceName =        "Conexant HD Audio output" ; {PlaceHolder="HD Audio"}
+RearLineOutDacName =               "Conexant HD Audio line out" ; {PlaceHolder="HD Audio"}
+RearLineInWaveDeviceName =         "Conexant HD Audio input" ; {PlaceHolder="HD Audio"}
+RearMicInWaveDeviceName =          "Conexant HD Audio mic" ; {PlaceHolder="HD Audio"}
+FrontPanelHeadphoneWaveDeviceName ="Conexant HD Audio headphone" ; {PlaceHolder="HD Audio"}
+FrontHPOutDacName =                "Conexant HD Audio headphone" ; {PlaceHolder="HD Audio"}
+FrontPanelMicWaveDeviceName =      "Conexant HD Audio mic" ; {PlaceHolder="HD Audio"}
+DigitalOutputWaveDeviceName =      "Conexant HD Audio digital out" ; {PlaceHolder="HD Audio"}
+DigitalInputWaveDeviceName =       "Conexant HD Audio digital in" ; {PlaceHolder="HD Audio"}
+;MicArrayWaveDeviceName =           "Conexant HD Audio mic array" ; {PlaceHolder="HD Audio"}
+AuxInWaveDeviceName =              "Conexant HD Audio aux in" ; {PlaceHolder="HD Audio"}
+
+RearLineOutTopoDeviceName =        "Conexant HD Audio output mixer" ; {PlaceHolder="HD Audio"}
+RearLineInTopoDeviceName =         "Conexant HD Audio input mixer" ; {PlaceHolder="HD Audio"}
+RearMicInTopoDeviceName =          "Conexant HD Audio mic mixer" ; {PlaceHolder="HD Audio"}
+FrontPanelHeadphoneTopoDeviceName ="Conexant HD Audio headphone mixer" ; {PlaceHolder="HD Audio"}
+FrontPanelMicTopoDeviceName =      "Conexant HD Audio mic mixer" ; {PlaceHolder="HD Audio"}
+DigitalOutputTopoDeviceName =      "Conexant HD Audio digital out mixer" ; {PlaceHolder="HD Audio"}
+DigitalInputTopoDeviceName =       "Conexant HD Audio digital in mixer" ; {PlaceHolder="HD Audio"}
+;MicArrayTopoDeviceName =           "Conexant HD Audio mic array mixer" ; {PlaceHolder="HD Audio"}
+AuxInTopoDeviceName =              "Conexant HD Audio aux in mixer" ; {PlaceHolder="HD Audio"}
+
+IndependentMicWaveDeviceName  = "Conexant HD Audio Microphone"         ; {PlaceHolder="HD Audio"}
+IndependentMicTopoDeviceName  = "Conexant HD Audio Microphone mixer"   ; {PlaceHolder="HD Audio"}
+IndependentMic2WaveDeviceName = "Conexant HD Audio Microphone 2"       ; {PlaceHolder="HD Audio"}
+IndependentMic2TopoDeviceName = "Conexant HD Audio Microphone 2 mixer" ; {PlaceHolder="HD Audio"}
+IndependentMic3WaveDeviceName = "Conexant HD Audio Microphone 3"       ; {PlaceHolder="HD Audio"}
+IndependentMic3TopoDeviceName = "Conexant HD Audio Microphone 3 mixer" ; {PlaceHolder="HD Audio"}
+IndependentMic4WaveDeviceName = "Conexant HD Audio Microphone 4"       ; {PlaceHolder="HD Audio"}
+IndependentMic4TopoDeviceName = "Conexant HD Audio Microphone 4 mixer" ; {PlaceHolder="HD Audio"}
+IndependentMic5WaveDeviceName = "Conexant HD Audio Microphone 5"       ; {PlaceHolder="HD Audio"}
+IndependentMic5TopoDeviceName = "Conexant HD Audio Microphone 5 mixer" ; {PlaceHolder="HD Audio"}
+
+MicArrayWaveDeviceName =        "Conexant HD Audio Microphone array"        ; {PlaceHolder="HD Audio"}
+MicArrayTopoDeviceName =        "Conexant HD Audio Microphone array mixer"  ; {PlaceHolder="HD Audio"}
+
+;;;RearLineOutWaveDeviceName =        "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;RearLineOutDacName =               "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;RearLineInWaveDeviceName =         "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;RearMicInWaveDeviceName =          "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;FrontPanelHeadphoneWaveDeviceName ="Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;FrontHPOutDacName =                "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;FrontPanelMicWaveDeviceName =      "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;DigitalOutputWaveDeviceName =      "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;DigitalInputWaveDeviceName =       "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;MicArrayWaveDeviceName =           "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;AuxInWaveDeviceName =              "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+
+;;;RearLineOutTopoDeviceName =        "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;RearLineInTopoDeviceName =         "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;RearMicInTopoDeviceName =          "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;FrontPanelHeadphoneTopoDeviceName ="Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;FrontPanelMicTopoDeviceName =      "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;DigitalOutputTopoDeviceName =      "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;DigitalInputTopoDeviceName =       "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;MicArrayTopoDeviceName =           "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+;;;AuxInTopoDeviceName =              "Conexant HD Audio" ; {PlaceHolder="HD Audio"}
+
+DisableDigitalOutputName = "Disable Digital Output"
+HdAudioDeviceDescription = "Conexant High Definition Audio" ; {PlaceHolder="UAA","High Definition Audio"}
+DigitalSpeakerName	 = "Digital Speaker"
+MicDockingSelectName	= "Mic Docking Sel"
+WaveOutMixName           = "WaveOut Mix"
+
+KSNAME_RearLineOutWave = "RearLineOutWave" ; non-localizable
+KSNAME_RearLineInWave = "RearLineInWave" ; non-localizable
+KSNAME_FrontPanelHeadphoneWave ="FrontPanelHeadphoneWave" ; non-localizable
+KSNAME_FrontPanelMicWave = "FrontPanelMicWave" ; non-localizable
+KSNAME_DigitalOutputWave = "DigitalOutputWave" ; non-localizable
+KSNAME_DigitalInputWave = "DigitalInputWave" ; non-localizable
+KSNAME_MicArrayWave = "MicArrayWave" ; non-localizable
+KSNAME_AuxInWave = "AuxInputWave" ; non-localizable
+
+KSNAME_RearLineOutTopo = "RearLineOutTopo" ; non-localizable
+KSNAME_RearLineInTopo = "RearLineInTopo" ; non-localizable
+KSNAME_FrontPanelHeadphoneTopo = "FrontPanelHeadphoneTopo" ; non-localizable
+KSNAME_FrontPanelMicTopo = "FrontPanelMicTopo" ; non-localizable
+KSNAME_DigitalOutputTopo = "DigitalOutputTopo" ; non-localizable
+KSNAME_DigitalInputTopo = "DigitalInputTopo" ; non-localizable
+KSNAME_MicArrayTopo = "MicArrayTopo" ; non-localizable
+KSNAME_AuxInTopo = "AuxInputTopo" ; non-localizable
+
+KSNAME_eMicInWave = "eMicInWave"   ; non-localizable
+KSNAME_eMicIn2Wave = "eMicIn2Wave" ; non-localizable
+KSNAME_eMicIn3Wave = "eMicIn3Wave" ; non-localizable
+KSNAME_eMicIn4Wave = "eMicIn4Wave" ; non-localizable
+KSNAME_eMicIn5Wave = "eMicIn5Wave" ; non-localizable
+KSNAME_eMicInTopo = "eMicInTopo"   ; non-localizable
+KSNAME_eMicIn2Topo = "eMicIn2Topo" ; non-localizable
+KSNAME_eMicIn3Topo = "eMicIn3Topo" ; non-localizable
+KSNAME_eMicIn4Topo = "eMicIn4Topo" ; non-localizable
+KSNAME_eMicIn5Topo = "eMicIn5Topo" ; non-localizable
+
+KSNAME_eMicArrayWave = "eMicArrayWave" ; non-localizable
+KSNAME_eMicArrayTopo = "eMicArrayTopo" ; non-localizable
+
+KSCATEGORY_AUDIO = "{6994AD04-93EF-11D0-A3CC-00A0C9223196}" ; non-localizable
+KSCATEGORY_RENDER = "{65E8773E-8F56-11D0-A3B9-00A0C9223196}" ; non-localizable
+KSCATEGORY_CAPTURE = "{65E8773D-8F56-11D0-A3B9-00A0C9223196}" ; non-localizable
+KSCATEGORY_TOPOLOGY = "{DDA54A40-1E4C-11D1-A050-405705C10000}" ; non-localizable
+Proxy.CLSID = "{17CCA71B-ECD7-11D0-B908-00A0C9223196}" ; non-localizable
+
+HdAudGuidRearLineOutDac = "{EEF86A90-3742-4974-B8D2-5370E1C540F6}" ; non-localizable
+HdAudGuidFrontHPOutDac = "{497B34AD-D67F-411c-8076-80D5B4250D67}" ; non-localizable
+HdAudGuidDisableDigitalOutput = "{F06BB67D-5C2F-48ad-A307-B449E3B217D6}" ; non-localizable
+HdAudGuidDigitalSpeaker = "{185FEF0D-9905-11D1-95A9-00C04FB925D3}" ; non-localizable
+HdAudGuidMicDockingSelect = "{6F0B76BE-8F71-4656-828D-8E40F658ABE8}" ; non-localizable
+HdAudGuidWaveOutMix = "{AA70601D-9D09-4a55-A8C9-1FC1E00EF274}" ; non-localizable
+UIPATH="CNXT_HDAUDIO"
+
+;;
+;; PropertyKey GUIDS
+;;
+PKEY_SYSFX_Association          = "{D04E05A6-594B-4FB6-A80D-01AF5EED7D1D},0"
+PKEY_SYSFX_PreMixClsid          = "{D04E05A6-594B-4FB6-A80D-01AF5EED7D1D},1"
+PKEY_SYSFX_PostMixClsid         = "{D04E05A6-594B-4FB6-A80D-01AF5EED7D1D},2"
+PKEY_SYSFX_UiClsid              = "{D04E05A6-594B-4FB6-A80D-01AF5EED7D1D},3"
+PKEY_DisplayName                = "{B725F130-47EF-101A-A5F1-02608C9EEBAC},10"
+PKEY_AudioEndpoint_Association  = "{1DA5D803-D492-4EDD-8C23-E0C0FFEE7F0E},2"
+
+PKEY_Endpoint_ID = "{A4A2C5A8-D979-4939-B4D5-AA85D6F08162},0"
+PKEY_Endpoint_Enable_LFX = "{a988f78b-07b6-4f47-9c9f-25409534cdee},0"
+PKEY_Endpoint_Enable_LFX_BEAMFORMING = "{818d3b4c-2bbf-40e9-a438-9361b0ffc427},0"
+PKEY_Endpoint_Enable_LFX_AEC = "{7996efb2-29c1-4898-be83-4a3646e06fac},0"
+PKEY_Endpoint_Enable_GFX = "{7f73d4e1-91e3-4490-9fba-5e86680a5748},0"
+PKEY_AudioEndpoint_Disable_SysFx = "{1da5d803-d492-4edd-8c23-e0c0ffee7f0e},5"
+					
+PKEY_AudioEndpoint_ControlPanelPageProvider = "{1DA5D803-D492-4EDD-8C23-E0C0FFEE7F0E}"
+
+;;
+;; PKEY_AudioEngine_OEMFormat:  Specifies the default format that is used for rendering/capturing.
+;; vartype = VT_BLOB
+;;
+PKEY_AudioEngine_OEMFormat = "{E4870E26-3CC5-4CD2-BA46-CA0A9A70ED04},3"
+
+SYSFX_UI_CLSID      = "{17166ED2-2A70-48b8-A1AE-D5A1EC419206}"
+SYSFX_PREMIX_CLSID  = "{19A120F2-EB17-4913-B7F0-C7970A666584}"
+SYSFX_POSTMIX_CLSID = "{C21FE761-A4DE-4060-B707-0E0C1FAF9AC4}"
+SYSFX_FriendlyName  = "CnxtDSP System Effect"
+
+;Information for FX
+; PropertyKeys
+PKEY_FX_Association  = "{D04E05A6-594B-4fb6-A80D-01AF5EED7D1D},0"
+PKEY_FX_PreMixClsid  = "{D04E05A6-594B-4fb6-A80D-01AF5EED7D1D},1"
+PKEY_FX_PostMixClsid = "{D04E05A6-594B-4fb6-A80D-01AF5EED7D1D},2"
+PKEY_FX_UiClsid      = "{D04E05A6-594B-4fb6-A80D-01AF5EED7D1D},3"
+PKEY_ItemNameDisplay = "{B725F130-47EF-101A-A5F1-02608C9EEBAC},10"
+
+FX_UI_CLSID      = "{5860E1C5-F95C-4a7a-8EC8-8AEF24F379A1}"
+FX_PREMIX_CLSID  = "{62dc1a93-ae24-464c-a43e-452f824c4250}"
+FX_POSTMIX_CLSID = "{637c490d-eee3-4c0a-973f-371958802da2}"
+FX_FriendlyName  = "Microsoft Audio Home Theater Effects"
+
+KSNODETYPE_ANY      = "{00000000-0000-0000-0000-000000000000}"
+KSNODETYPE_SPEAKER  = "{DFF21CE1-F70F-11D0-B917-00A0C9223196}"
+KSNODETYPE_HEADPHONES  		= "{DFF21CE2-F70F-11D0-B917-00A0C9223196}"
+KSNODETYPE_MICROPHONE 		= "{DFF21BE1-F70F-11D0-B917-00A0C9223196}"
+KSNODETYPE_LINE_CONNECTOR 	= "{DFF21FE3-F70F-11D0-B917-00A0C9223196}"
+KSNODETYPE_CD_PLAYER		= "{DFF220E3-F70F-11D0-B917-00A0C9223196}"
+KSNODETYPE_MICROPHONE_ARRAY = "{DFF21BE5-F70F-11D0-B917-00A0C9223196}"
+KSNODETYPE_SPDIF_INTERFACE	= "{DFF21FE5-F70F-11D0-B917-00A0C9223196}"
+
+REG_BINARY          = 0x00000001
+REG_DWORD 		= 0x10001
+ 

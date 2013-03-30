@@ -1,0 +1,272 @@
+13.03.4
+-------
+* Обновлены Acer:
+6x86\WAUHER_4.98.13.0 - Conexant High Definition Audio, от DriverVer = 05/21/2009, 4.91.8.53 до 09/17/2009, 4.98.13.0
+6x64\WAUHER_4.98.13.0 - Conexant High Definition Audio, от DriverVer = 05/21/2009, 4.91.8.53 до 09/17/2009, 4.98.13.0
+
+* Обновлены Asus:
+5x86\K52CC2_3.94.0.0 - Conexant SmartAudio HD, от DriverVer = 05/06/2010, 3.80.0.51 до 09/30/2010, 3.94.0.0
+
+* Обновлены HP:
+5x86\cpl3085_6.14.10.0510 - Conexant AC-Link Audio, от DriverVer = 12/03/2004, 6.14.10.0385 до 01/24/2005, 6.14.10.0510
+5x86\hpa0850_6.13.10.8122 - Conexant AC-Link Audio, от DriverVer = 10/17/2002, 6.13.10.8117 до 02/06/2003, 6.13.10.8122
+	! в новом драйвере вырезаны HWIDs, поэтому старый драйвер сохранен в подпапке нового (NTx86\hpa0850_6.13.10.8122\6.13.10.8117\)
+5x86\wis30B2a_3.38.0.50 - Conexant High Definition Audio, от DriverVer = 06/23/2006, 3.25.0.0 до 03/26/2007, 3.38.0.50
+	! перенесен в Allx86\wis30B2a_3.38.0.50, так как указано, что он для WinXP-WinVista-x86
+5x86\qta3091_6.14.10.0575 - Conexant AC-Link Audio, от DriverVer = 03/08/2005, 6.14.10.0535 до 04/22/2005, 6.14.10.0575 
+	! перенесен в Allx86\qta3091_6.14.10.0575, так как указано, что он для WinXP-WinVista-x86
+NTx86\Qv30CF_4.36.7.61 - Conexant High Definition SmartAudio HD2, от DriverVer = 03/05/2008, 4.36.7.60 до 06/18/2008, 4.36.7.61
+NTx64\Qv30CF_4.36.7.61 - Conexant High Definition SmartAudio HD2, от DriverVer = 03/05/2008, 4.36.7.60 до 06/18/2008, 4.36.7.61
+NTx86\SprtHD_4.36.7.60 - Conexant HD-Audio SmartAMC HD2, от DriverVer = 06/29/2007, 4.23.0.0 до 03/20/2008, 4.36.7.60
+
+* Обновлены Toshiba:
+5x86\BD1HDA_3.18.0.51 - Conexant High Definition Audio, от DriverVer = 07/28/2006, 3.11.0.51 до 12/04/2006, 3.18.0.51
+	! перенесен в NTx86\BD1HDA_3.18.0.51, так как он от WinVista-x86
+NTx86\TE1HER_4.83.1.0 - Conexant High Definition SmartAudio 221, от DriverVer = 10/29/2008, 4.36.10.0 до 01/15/2009, 4.83.1.0
+NTx86\TZ12PE_4.130.0.61 - Conexant SmartAudio HD, от DriverVer = 07/27/2010, 4.126.0.62 до 10/27/2010, 4.130.0.61
+NTx64\TZ12PE_4.130.0.61 - Conexant SmartAudio HD, от DriverVer = 07/27/2010, 4.126.0.62 до 10/27/2010, 4.130.0.61
+5x86\CalCC2_8.54.4.53 - Conexant SmartAudio HD, от DriverVer = 02/21/2011, 8.54.1.0 до 04/15/2011, 8.54.4.53
+5x64\CalCC2_8.54.4.53 - Conexant SmartAudio HD, от DriverVer = 02/21/2011, 8.54.1.0 до 04/15/2011, 8.54.4.53
+NTx86\CalCC2_8.54.4.53 - Conexant SmartAudio HD, от DriverVer = 02/21/2011, 8.54.1.0 до 04/15/2011, 8.54.4.53
+NTx64\CalCC2_8.54.4.53 - Conexant SmartAudio HD, от DriverVer = 02/21/2011, 8.54.1.0 до 04/15/2011, 8.54.4.53
+
++ Добавлены Fujitsu-Siemens:
+5x86\cviaaud_6.13.10.8074 - Conexant AC-Link Audio, DriverVer = 02/21/2002, 6.13.10.8074
+5x86\cvia2aud_6.13.10.8078 - Conexant AC-Link Audio, DriverVer = 04/01/2002, 6.13.10.8078
+5x86\fsm280a_6.13.10.8320 - Conexant AC-Link Audio, DriverVer = 06/01/2004, 6.13.10.8320
+5x86\fsm107da_6.14.10.0510 - Conexant AC-Link Audio, DriverVer = 01/26/2005, 6.14.10.0510
+5x86\DW1Ven_3.12.0.50 - Conexant High Definition Audio, DriverVer = 01/09/2006, 3.12.0.50
+5x86\LM10WHDA_3.30.0.50 - Conexant High Definition Audio-Venice 5045, DriverVer = 08/31/2006, 3.30.0.50
+NTx86\DW1Ven_4.8.0.0 - Conexant High Definition Audio, DriverVer = 11/07/2006, 4.8.0.0
+NTx86\LM10WHD_4.13.0.0 - Conexant High Definition Audio, DriverVer = 01/16/2007, 4.13.0.0
+NTx86\C4xVen_4.19.0.52 - Conexant High Definition Audio, DriverVer = 06/01/2007, 4.19.0.52
+NTx64\C4xVen_4.18.0.50 - Conexant High Definition Audio, DriverVer = 04/24/2007, 4.18.0.50
+NTx86\FICHER_4.31.0.50 - Conexant High Definition SmartAudio 221, DriverVer = 09/20/2007, 4.31.0.50
+
++ Добавлены Asus:
+5x86\X87QPE_3.65.1.0 - Conexant Pebble High Definition SmartAudio, DriverVer = 03/02/2009, 3.65.1.0
+5x64\X87QPE_3.65.1.0 - Conexant Pebble High Definition SmartAudio, DriverVer = 03/02/2009, 3.65.1.0
+5x64\K52CC2_3.94.0.0 - Conexant SmartAudio HD, DriverVer = 09/30/2010, 3.94.0.0
+NTx86\X87QPE_4.95.0.51 - Conexant Pebble High Definition SmartAudio, DriverVer = 03/02/2009, 4.95.0.51
+NTx64\X87QPE_4.95.0.51 - Conexant Pebble High Definition SmartAudio, DriverVer = 03/02/2009, 4.95.0.51
+
++ Добавлены HP:
+5x86\Vlg103Ca_6.14.10.0675 - Conexant AC-Link Audio, DriverVer = 08/22/2006, 6.14.10.0675
+5x86\cpl308ba_6.14.10.0559 - Conexant AC-Link Audio, DriverVer = 07/28/2006, 6.14.10.0559
+5x86\hpa006a_6.13.10.8310 - Conexant AC-Link Audio, DriverVer = 04/29/2004, 6.13.10.8310
+5x86\hpa3082_6.14.10.8380 - Conexant AC-97 Audio, DriverVer = 11/17/2004, 6.14.10.8380
+NTx86\QTA808FA_6.14.10.0535 - Conexant AC-Link Audio, DriverVer = 02/23/2005, 6.14.10.0535
+Allx86\CPL309Ba_6.14.10.0597 - Conexant AC-Link Audio, DriverVer = 12/28/2006, 6.14.10.0597
+Allx64\wi630B2a_3.38.0.50 - Conexant High Definition Audio, DriverVer = 03/26/2007, 3.38.0.50
+5x86\wis30B_3.30.0.0 - Conexant High Definition Audio, DriverVer = 11/22/2006, 3.30.0.0
+5x64\CpV30D_3.34.0.50 - Conexant High Definition Audio-Venice 5045, DriverVer = 02/14/2007, 3.34.0.50
+NTx86\Qv30CF_4.36.7.60\4.33.1.61 - Conexant High Definition Audio, DriverVer = 05/01/2008, 4.33.1.61 (более старая версия, с дополнительными HWIDs)
+NTx64\Qv30CF_4.36.7.60\4.33.1.61 - Conexant High Definition Audio, DriverVer = 05/01/2008, 4.33.1.61 (более старая версия, с дополнительными HWIDs)
+NTx86\Qv30CF_4.36.7.60\4.22.0.0 - Conexant HD-Audio SmartAMC HD2, DriverVer = 06/26/2007, 4.22.0.0 (более старая версия, с дополнительными HWIDs)
+NTx64\Qv30CF_4.36.7.60\4.22.0.0 - Conexant HD-Audio SmartAMC HD2, DriverVer = 06/26/2007, 4.22.0.0 (более старая версия, с дополнительными HWIDs)
+NTx86\wisVen_4.36.7.60 - Conexant High Definition SmartAudio HD2, DriverVer = 03/05/2008, 4.36.7.60
+NTx64\cp6308Ba_6.14.10.0671 - Conexant AC-Link Audio, DriverVer = 03/21/2007, 6.14.10.0671
+NTx86\CPL30A_3.40.0.50 - Conexant High Definition Audio, DriverVer = 05/03/2007, 3.40.0.50 (WinVista-x86)
+NTx86\cV30D5_4.36.7.61 - Conexant High Definition SmartAudio HD2, DriverVer = 06/20/2008, 4.36.7.61
+NTx86\SprVen_4.36.7.60 - Conexant High Definition Audio, DriverVer = 04/09/2008, 4.36.7.60
+NTx64\SprVen_4.36.7.60 - Conexant High Definition Audio, DriverVer = 04/09/2008, 4.36.7.60
+NTx86\Qh30CF_4.36.7.60 - Conexant High Definition SmartAudio 221, DriverVer = 03/04/2008, 4.36.7.60
+NTx64\Qh30CF_4.36.7.60 - Conexant High Definition SmartAudio 221, DriverVer = 03/04/2008, 4.36.7.60
+NTx86\WiSVHe_4.36.7.60 - Conexant High Definition SmartAudio 221, DriverVer = 03/06/2008, 4.36.7.60
+NTx64\WiSVHe_4.36.7.60 - Conexant High Definition SmartAudio 221, DriverVer = 03/06/2008, 4.36.7.60
+NTx86\LEOHER_4.42.0.0 - Conexant High Definition SmartAudio 221, DriverVer = 03/12/2008, 4.42.0.0
+NTx86\WAHER_4.58.0.0 - Conexant High Definition SmartAudio 221, DriverVer = 06/10/2008, 4.58.0.0
+WinAll\hpdokua_1.29.8.0 - HP USB Media Port Rep Audio, DriverVer = 03/22/2011, 1.29.8.0
+
++ Добавлены Toshiba:
+5x86\BD1Va_3.21.0.52 - Conexant High Definition Audio, DriverVer = 07/11/2006, 3.21.0.52
+5x64\BD1Va_3.21.0.52 - Conexant High Definition Audio, DriverVer = 07/11/2006, 3.21.0.52
+Allx86\BD1HDA_3.44.0.0 - Conexant High Definition Audio, DriverVer = 08/28/2007, 3.44.0.0
+Allx86\tosEW6a_6.14.10.0590 - Conexant AC-Link Audio, DriverVer = 07/05/2005, 6.14.10.0590
+NTx86\BD1VHD_4.8.0.0 - Conexant High Definition Audio, DriverVer = 11/17/2006, 4.8.0.0
+NTx64\BD1VHD_4.8.0.0 - Conexant High Definition Audio, DriverVer = 11/17/2006, 4.8.0.0
+NTx64\TE1HER_4.83.1.0 - Conexant High Definition SmartAudio 221, DriverVer = 01/16/2009, 4.83.1.0
+5x86\TZ12PE_3.66.19.50 - Conexant Pebble High Definition SmartAudio, DriverVer = 09/21/2009, 3.66.19.50
+5x86\BERCC2_3.80.0.0 - Conexant CX20671 SmartAudio HD, DriverVer = 03/11/2010, 3.80.0.0
+5x64\BERCC2_3.80.0.0 - Conexant CX20671 SmartAudio HD, DriverVer = 03/11/2010, 3.80.0.0
+5x64\TE7Peb_8.51.2.64 - Conexant SmartAudio HD, DriverVer = 03/27/2012, 8.51.2.64
+
++ Добавлен iRU:
+5x86\qta0707_6.13.10.8235 - Conexant AC-Link Audio, DriverVer = 09/15/2003, 6.13.10.8235
+
+* Изменения:
+5x86\WAHer_4.58.0.0 перенесен в NTx86, так как он для WinVista-x86
+
+* Перемещение драйверов HDMI в соответствующий драйвер-пак
+
+
+13.02.3
+-------
+Версия обновлена совместно с Debugger
++ Добавлены драйверы для Dell, eMachines, Gateway, Lenovo
+* Обновлены драйверы для Acer, Dell, eMachines
+
+
+13.02.2
+-------
+Версия обновлена совместно с Debugger
++ Добавлены драйверы Toshiba 6.13.10.8355 XP
++ Добавлены драйверы Acer Pebble 507 3.87.0.0
++ Добавлены драйверы Acer Pebble2058 8.41.0.0
++ Добавлены драйверы Acer Hermosa5051 3.66.10.0
++ Добавлены драйверы AC-Link Audio 6.13.10.8335
+* Обновлены драйверы Acer Pebble2058 8.54.44.51
+* Обновлены драйверы Acer Hermosa5051 4.91.8.53
+
+
+13.01.2
+-------
++ Добавлены и обновлены многие драйверы
+
+
+13.01.1
+-------
++ Добавлены драйверы Acer 8.54.44.0
++ Добавлены драйверы Toshiba 4.98.6.61 + 4.98.16.61
++ Добавлены драйверы Gateway 6.14.10.0590
+* Обновлены драйверы Lenovo 8.32.43.50
+
+
+13.00.0
+-------
+* Каталогизация драйверов по вендорам и удаление дубликатов
+
+
+12.12.2
+-------
++ Добавлены драйверы Hermosa 5051 v4.98.4.60 для HP G60
++ Добавлены драйверы Pebble 5071 v4.98.60.50 для HP G60
++ Добавлены драйверы 2058x v8.54.16.0 для Lenovo THinkPad T520
++ Добавлены драйверы 2058x v8.32.27.0 для Lenovo THinkPad Edge E420
+
+
+
+PS: 13.02.3 от Debugger
+-------
++ Добавлены драйверы для Lenovo:
+5x86\EDGCC2_8.54.34.51 - Pebble 2058, DriverVer = 06/29/2012, 8.54.34.51
+5x64\EDGCC2_8.54.34.51 - Pebble 2058, DriverVer = 06/29/2012, 8.54.34.51
+5x86\LAHER_3.83.0.0 - Hermosa 5051, DriverVer = 04/19/2010, 3.83.0.0
+5x64\LAHER_3.83.0.0 - Hermosa 5051, DriverVer = 04/19/2010, 3.83.0.0
+NTx86\LAHER_4.98.7.60 - Hermosa 5051, DriverVer = 06/26/2009, 4.98.7.50
+NTx64\LAHER_4.98.7.60 - Hermosa 5051, DriverVer = 06/26/2009, 4.98.7.50
+6x86\TPSHNMV_4.95.46.0 - Pebble 5071, DriverVer = 06/15/2010, 4.95.46.0
+6x64\TPSHNMV_4.95.46.0 - Pebble 5071, DriverVer = 06/15/2010, 4.95.46.0
+7x86\TPSHNMV_4.95.45.50 - Pebble 5071, DriverVer = 05/10/2010, 4.95.45.50
+7x64\TPSHNMV_4.95.45.50 - Pebble 5071, DriverVer = 05/10/2010, 4.95.45.50
+5x86\LL1Peb_3.76.0.50 - Pebble 5071, DriverVer = 01/04/2010, 3.76.0.50
+5x64\LL1Peb_3.76.0.50 - Pebble 5071, DriverVer = 01/04/2010, 3.76.0.50
+NTx86\LL1Peb_4.95.50.56 - Pebble 5071, DriverVer = 08/06/2009, 4.95.50.56
+NTx64\LL1Peb_4.95.50.56 - Pebble 5071, DriverVer = 08/06/2009, 4.95.50.56
+5x86\LT1CC2_8.54.19.0 - Pebble 2058, DriverVer = 07/28/2011, 8.54.19.0
+5x64\LT1CC2_8.54.19.0 - Pebble 2058, DriverVer = 07/28/2011, 8.54.19.0
+5x86\PLSCC2_8.54.28.0 - Pebble 2058, DriverVer = 12/08/2011, 8.54.28.0
+5x64\PLSCC2_8.54.28.0 - Pebble 2058, DriverVer = 12/08/2011, 8.54.28.0
+5x86\QLZCC2_8.54.28.50 - Pebble 2058, DriverVer = 12/13/2011, 8.54.28.50
+5x64\QLZCC2_8.54.28.50 - Pebble 2058, DriverVer = 12/13/2011, 8.54.28.50
+5x86\TYMPeb_3.66.11.0 - Pebble 5071, DriverVer = 07/03/2009, 3.66.11.0
+5x64\TYMPeb_3.66.11.0 - Pebble 5071, DriverVer = 07/03/2009, 3.66.11.0
+5x86\ANote_3.36.0.0 - Venice 5045, DriverVer = 03/08/2007, 3.36.0.0
+NTx86\ANote_4.19.1.0 - Venice 5045, DriverVer = 05/25/2007, 4.19.1.0
+NTx64\ANote_4.15.0.50 - Venice 5045, DriverVer = 03/06/2007, 4.15.0.50
+5x86\LE9HER_3.49.4.50 - Hermosa 5051, DriverVer = 08/19/2008, 3.49.4.50
+7x86\LE9HER_4.98.4.60 - Hermosa 5051, DriverVer = 06/25/2009, 4.98.4.60
+7x64\LE9HER_4.98.4.60 - Hermosa 5051, DriverVer = 06/25/2009, 4.98.4.60
+NTx86\LE9HER_4.58.0.0 - Hermosa 5051, DriverVer = 06/25/2008, 4.58.0.0
+5x64\CJITHER_3.54.1.0 - Hermosa 5051, DriverVer = 04/23/2009, 3.54.1.0
+7x86\CJITHer_4.98.6.60 - Hermosa 5051, DriverVer = 07/15/2009, 4.98.6.60
+7x64\CJITHer_4.98.6.60 - Hermosa 5051, DriverVer = 07/15/2009, 4.98.6.60
+NTx86\CJITHer_4.98.6.0 - Hermosa 5051, DriverVer = 08/17/2009, 4.98.6.0
+NTx64\CJITHer_4.98.6.0 - Hermosa 5051, DriverVer = 08/17/2009, 4.98.6.0
+7x86\KIWHer_4.119.0.60 - Hermosa 5051, DriverVer = 04/14/2010, 4.119.0.60
+7x64\KIWHer_4.119.0.60 - Hermosa 5051, DriverVer = 04/14/2010, 4.119.0.60
+NTx86\KIWHer_4.95.16.0 - Hermosa 5051, DriverVer = 04/02/2009, 4.95.16.0
+NTx64\KIWHer_4.95.16.0 - Hermosa 5051, DriverVer = 04/02/2009, 4.95.16.0
+7x86\LM3CC2_4.111.0.60 - Pebble 5071, DriverVer = 01/20/2010, 4.111.0.60
+7x64\LM3CC2_4.111.0.60 - Pebble 5071, DriverVer = 01/20/2010, 4.111.0.60
+5x64\FL3Peb_3.97.0.0 - Pebble 5071, DriverVer = 12/14/2010, 3.97.0.0
+5x64\NELCC2_3.91.0.0 - Pebble 5071, DriverVer = 07/16/2010, 3.91.0.0
+5x64\PIWCC2_8.54.4.51 - Pebble 2058, DriverVer = 09/14/2011, 8.54.4.51
+5x64\TPUNHER_3.64.8.50 - Hermosa 5051, DriverVer = 07/23/2009, 3.64.8.50
+
++ Добавлены драйверы для Dell:
+All7\SRSAPO_1.8.78.0 - SRS Premium Sound APO for Conexant USB Audio, DriverVer = 09/17/2010, 1.8.78.0
+5x64\PI945RH_3.66.11.50 - Hermosa 5051, DriverVer = 06/17/2009, 3.66.11.50
+6x86\PI945RH_4.95.30.0 - Hermosa5051, DriverVer = 08/17/2009, 4.95.30.0
+6x64\PI945RH_4.95.30.0 - Hermosa5051, DriverVer = 08/17/2009, 4.95.30.0
+7x86\PI945RH_4.98.3.53 - Hermosa5051, DriverVer = 06/01/2009, 4.98.3.53
+7x64\PI945RH_4.98.3.53 - Hermosa5051, DriverVer = 06/01/2009, 4.98.3.53
+5x64\AM3PE_3.73.0.50 - Pebble 5071, DriverVer = 11/12/2009, 3.73.0.50	
+NTx86\AM3PE_4.95.25.51 - Pebble 5071, DriverVer = 06/12/2009, 4.95.25.51
+NTx64\AM3PE_4.95.25.51 - Pebble 5071, DriverVer = 06/12/2009, 4.95.25.51
+5x64\VM8Peb_3.94.0.52 - Pebble5071, DriverVer = 10/20/2010, 3.94.0.52
+5x64\H61Car_8.50.4.0 - Conexant HD Audio, DriverVer = 03/10/2011, 8.50.4.0
+NTx86\H61Car_8.50.12.0 - Conexant HD Audio, DriverVer = 06/25/2012, 8.50.12.0
+NTx64\H61Car_8.50.12.0 - Conexant HD Audio, DriverVer = 06/25/2012, 8.50.12.0
+5x64\WLPeb_3.66.21.0 - Pebble 5071, DriverVer = 10/30/2009, 3.66.21.0
+NTx86\WLPeb_4.95.20.50 - Pebble 5071, DriverVer = 04/23/2009, 4.95.20.50
+NTx64\WLPeb_4.95.20.50 - Pebble 5071, DriverVer = 04/23/2009, 4.95.20.50
+NTx86\VM89He_4.57.0.0 - Hermosa 5051, DriverVer = 06/05/2008, 4.57.0.0
+NTx86\SPACC2_4.126.0.62 - Pebble 5071, DriverVer = 09/21/2010, 4.126.0.62
+NTx64\SPACC2_4.126.0.62 - Pebble 5071, DriverVer = 09/21/2010, 4.126.0.62
+NTx86\chdrt_8.54.45.0 - Conexant SmartAudio HD, DriverVer = 08/03/2012, 8.54.45.0
+NTx64\chdrt_8.54.45.0 - Conexant SmartAudio HD, DriverVer = 08/03/2012, 8.54.45.0
+5x86\PBCar_8.50.12.0 - Conexant HD Audio, DriverVer = 06/26/2012, 8.50.12.0
+5x64\PBCar_8.50.12.0 - Conexant HD Audio, DriverVer = 06/26/2012, 8.50.12.0
+
++ Добавлены драйверы для eMachines:
+5x86\ari2041_6.14.10.0575 - Conexant AC-Link Audio, DriverVer = 04/28/2005, 6.14.10.0575
+5x86\ari2040_6.14.10.0575 - Conexant AC-Link Audio, DriverVer = 05/02/2005, 6.14.10.0575
+5x86\qta0300_6.14.10.0575 - Conexant AC-Link Audio, DriverVer = 04/20/2005, 6.14.10.0575
+
+* Добавлены драйверы для Gateway:
+5x86\qta0460_6.14.10.0566 - Conexant AC-Link Audio, DriverVer = 10/19/2005, 6.14.10.0566
+5x86\qta0460_6.14.10.0566\6.14.10.0565 - Conexant AC-Link Audio, DriverVer = 03/31/2005, 6.14.10.0565 (есть HWID которого нет в новой версии)
+5x86\qta0360_6.14.10.0510 - Conexant AC-Link 2 Channel Audio, DriverVer = 01/12/2005, 6.14.10.0510
+6x86\GQSAHer_4.69.0.53 - Hermosa 5051, DriverVer = 08/13/2008, 4.69.0.53
+6x64\GQSAHer_4.69.0.53 - Hermosa 5051, DriverVer = 08/13/2008, 4.69.0.53
+7x86\GQAJHer_4.98.4.60 - Hermosa 5051, DriverVer = 07/01/2009, 4.98.4.60
+7x64\GQAJHer_4.98.4.60 - Hermosa 5051, DriverVer = 07/01/2009, 4.98.4.60
+
+* Обновлены драйверы для Lenovo:
+5x86\CJITHER_3.54.1.0 - Hermosa 5051, от DriverVer = 05/02/2008, 3.49.4.50 до 04/23/2009, 3.54.1.0
+5x86\KIWHer_3.83.0.0 - Hermosa 5051, от DriverVer = 04/27/2009, 3.66.9.50 до 04/01/2010, 3.83.0.0
+5x64\KIWHer_3.83.0.0 - Hermosa 5051, от DriverVer = 04/27/2009, 3.66.9.50 до 04/01/2010, 3.83.0.0
+5x86\PILCC2_8.32.27.50 - Pebble 2058, от DriverVer = 03/30/2011, 8.32.27.0 до 05/13/2011, 8.32.27.50
+5x86\PIWCC2_8.54.4.51 - Pebble 2058, от DriverVer = 11/12/2010, 8.42.0.0 до 09/14/2011, 8.54.4.51
+NTx86\PIWCC2_8.54.4.51 - Pebble 2058, от DriverVer = 11/12/2010, 8.42.0.0 до 09/14/2011, 8.54.4.51
+NTx64\PIWCC2_8.54.4.51 - Pebble 2058, от DriverVer = 11/12/2010, 8.42.0.0 до 09/14/2011, 8.54.4.51
+5x86\TPSHNMV_3.66.144.0 - Pebble5071, от DriverVer = 03/27/2009, 3.66.7.0 до 07/21/2010, 3.66.144.0
+7x86\TPUNPEB_4.95.49.53 - Pebble5071, от DriverVer = 10/20/2010, 4.95.48.50 до 08/03/2012, 4.95.49.53 (перенесен из NTx86)
+7x64\TPUNPEB_4.95.49.53 - Pebble5071, от DriverVer = 10/20/2010, 4.95.48.50 до 08/03/2012, 4.95.49.53 (перенесен из NTx64)
+NTx86\LNVCC2_8.54.44.0 - Pebble 2058, от DriverVer = 06/25/2012, 8.54.43.0 до 08/08/2012, 8.54.44.0
+NTx64\LNVCC2_8.54.44.0 - Pebble 2058, от DriverVer = 06/25/2012, 8.54.43.0 до 08/08/2012, 8.54.44.0
+NTx86\chdrt_8.32.43.0 - Conexant 20672 SmartAudio HD, от DriverVer = 10/03/2011, 8.32.23.2 до 08/08/2012, 8.32.43.0
+NTx64\chdrt_8.32.43.0 - Conexant 20672 SmartAudio HD, от DriverVer = 10/03/2011, 8.32.23.2 до 08/08/2012, 8.32.43.0
+NTx86\LL1Peb_4.126.0.60 - Pebble 5071, от DriverVer = 08/06/2009, 4.95.50.56 до 06/22/2010, 4.126.0.60
+NTx64\LL1Peb_4.126.0.60 - Pebble 5071, от DriverVer = 08/06/2009, 4.95.50.56 до 06/22/2010, 4.126.0.60
+
+* Обновлены драйверы для Dell:
+NTx86\chdrt_8.54.40.0 - Conexant SmartAudio HD, от DriverVer = 07/17/2012, 8.54.40.0 до 08/07/2012, 8.54.40.0
+NTx64\chdrt_8.54.40.0 - Conexant SmartAudio HD, от DriverVer = 07/17/2012, 8.54.40.0 до 08/07/2012, 8.54.40.0
+
+* Обновлены драйверы для eMachines:
+7x86\WAUHER_4.119.1.61 - Hermosa 5051, от DriverVer = 08/11/2009, 4.98.9.0 до 07/14/2010, 4.119.1.61
+7x64\WAUHER_4.119.1.61 - Hermosa 5051, от DriverVer = 08/11/2009, 4.98.9.0 до 07/14/2010, 4.119.1.61
+
+* Обновлены драйверы для Acer:
+NTx86\ACRCC2_4.123.0.0 - Pebble 5071, от DriverVer = 04/16/2010, 4.121.0.50 до 05/18/2010, 4.123.0.0
+NTx64\ACRCC2_4.123.0.0 - Pebble 5071, от DriverVer = 04/16/2010, 4.121.0.50 до 05/18/2010, 4.123.0.0
+
+! Структурные изменения:
+NTx86\TPUNPEB_4.95.48.50 перенесен в 6x86\TPUNPEB_4.95.48.50, драйвер от Win7 удален в связи с обновлением
+NTx86\TPUNPEB_4.95.48.50 перенесен в 6x64\TPUNPEB_4.95.48.50, драйвер от Win7 удален в связи с обновлением
+6x86\chdrt_8.54.40.0 перенесен в NTx86, в оригинальном дистрибутиве он указан как Win8
+6x64\chdrt_8.54.40.0 перенесен в NTx86, в оригинальном дистрибутиве он указан как Win8
+6x86\chdrt_8.50.8.0 перенесен в NTx86, в оригинальном дистрибутиве он указан как Win7
+6x64\chdrt_8.50.8.0 перенесен в NTx86, в оригинальном дистрибутиве он указан как Win7

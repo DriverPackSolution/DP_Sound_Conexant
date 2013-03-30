@@ -1,0 +1,342 @@
+;*********************************************************
+;cviaaud.inf
+;*********************************************************
+;
+;**********************************************************
+; Copyright (C) 1999, 2000, Conexant Systems, Inc. 
+;**********************************************************
+; INF file to install a WDM driver for AC97 Audio devices 
+;
+
+[Version]
+Signature="$CHICAGO$"
+ClassGuid={4D36E96C-E325-11CE-BFC1-08002BE10318}
+Class=MEDIA
+Provider=%MfgNameShort%
+LayoutFile=layout.inf, layout1.inf, layout2.inf
+
+CatalogFile=cviaaud.cat
+DriverVer=02/21/2002, 6.13.10.8074
+
+[Manufacturer]
+%MfgNameLong%=Conexant
+
+[Conexant]
+%*WDM_AMCAUD.DeviceDesc%=WDM_AMCAUD,PCI\VEN_1106&DEV_3058&SUBSYS_118510CF
+
+[ControlFlags]
+ExcludeFromSelect=PCI\VEN_1106&DEV_3058&SUBSYS_118510CF
+
+
+;**************************
+; File copy sections
+;**************************
+[PFCommon.CopyFiles]
+cviaaud.sys
+
+[PFHal.CopyFiles]
+cviahal.sys
+
+[Uninstall.CopyFiles]
+ciaunwdm.exe
+
+[DestinationDirs]
+DefaultDestDir=10,system32\drivers 
+PFCommon.CopyFiles=10,system32\drivers 
+PFHal.CopyFiles=10,system32\drivers 
+Uninstall.CopyFiles=10 
+
+
+;**************************
+; Installation Disc Layout
+;**************************
+[SourceDisksNames]
+330=%DrvDiskName%,,,""
+
+[SourceDisksFiles]
+;cviaaud.cat=0,,920
+cviaaud.sys=330
+ciaunwdm.exe=330
+cviahal.sys = 330
+
+
+;*******************************
+; Device installation sections
+;*******************************
+;
+;*****************
+; Windows98 SE 
+; 
+
+[WDM_AMCAUD]
+Include=ks.inf,wdmaudio.inf 
+Needs=KS.Registration,WDMAUDIO.Registration
+CopyFiles=PFCommon.CopyFiles,PFHal.CopyFiles,Uninstall.CopyFiles
+AddReg=AudioCommon.AddReg,PFCommon.AddReg,PFNonWS.AddReg,PFBranch.AddReg,PFBUninstall.AddReg
+
+;*****************
+; Windows2000 
+; 
+[WDM_AMCAUD.NT.HW]
+AddReg=PFHal_NT.AddReg
+
+[WDM_AMCAUD.NT]
+Include=ks.inf,wdmaudio.inf 
+Needs=KS.Registration,WDMAUDIO.Registration
+CopyFiles=PFCommon.CopyFiles,PFHal.CopyFiles,Uninstall.CopyFiles
+AddReg=AudioCommon.AddReg,PFCommon.AddReg,PFNonWS.AddReg,PFBranch.AddReg,PFBUninstall.AddReg
+
+
+;*************************************
+; AddReg section
+;*************************************
+[AudioCommon.AddReg]
+HKR,,AssociatedFilters,,"wdmaud,swmidi,redbook"
+HKR,Drivers,SubClasses,,"wave,midi,mixer"
+HKR,Drivers\wave\wdmaud.drv,Description,,%*WDM_AMCAUD.DeviceDesc%
+HKR,Drivers\mixer\wdmaud.drv,Description,,%*WDM_AMCAUD.DeviceDesc%
+HKR,Drivers\midi\wdmaud.drv,Description,,%*WDM_AMCAUD.DeviceDesc%
+HKR,Drivers\wave\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\midi\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\mixer\wdmaud.drv,Driver,,wdmaud.drv
+HKR,,CAmcHalClientClassID,0x00000001,01
+HKR,,NumberOfSoftStreams,0x00000001,08,01
+
+;  Flex Mixer Settings
+;  This works in Hex-Percentages.  64 = 100% of the volume possible
+;				    32 = 50% of the volume possible, etc...
+HKR,,Flex_PctLineOutMasterVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctLineOutHeadphoneOutVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctMonoOutVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctWaveInMasterVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctWaveStreamVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctSpeakerPhoneVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctMicWaveInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctCDWaveInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctLineInWaveInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctVideoInWaveInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctAuxInWaveInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctPhoneLineWaveInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctMixersWaveInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctMixermWaveInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctPhoneLineVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctMicInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctTpLineInVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctTpCDVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctTpVideoVolume,0x00000001,64,00,00,00
+HKR,,Flex_PctAuxVolume,0x00000001,64,00,00,00
+HKR,,MasterVolumeLevelShift,0x00000001,02,00,00,00
+HKR,,MicAnalogPassthroughLevelShift,0x00000001,02,00,00,00
+
+;Initial Mixer Settings
+HKR,MixerSettings,MasterVolume,0x00000001,04,04
+HKR,MixerSettings,HeadphoneVolume,0x00000001,00,00
+HKR,MixerSettings,MasterVolMono,0x00000001,00,80
+HKR,MixerSettings,PCBeepVolume,0x00000001,00,00
+HKR,MixerSettings,PhoneVolume,0x00000001,08,80
+HKR,MixerSettings,MicVolume,0x00000001,08,80
+HKR,MixerSettings,LineInVolume,0x00000001,08,80
+HKR,MixerSettings,CDVolume,0x00000001,05,05
+HKR,MixerSettings,VideoVolume,0x00000001,08,88
+HKR,MixerSettings,AuxVolume,0x00000001,05,05
+HKR,MixerSettings,PCMOutVolume,0x00000001,02,02
+HKR,MixerSettings,RecordSelect,0x00000001,00,00
+HKR,MixerSettings,RecordGain,0x00000001,00,00
+HKR,MixerSettings,RecordGainMic,0x00000001,00,00
+HKR,MixerSettings,GeneralPurpose,0x00000001,00,00
+HKR,MixerSettings,PCMPlaybackSR,0x00000001,80,BB
+HKR,MixerSettings,PCMCaptureSR,0x00000001,80,BB
+HKR,MixerSettings,SpeakerphoneMute,0x00000001,00,00
+HKR,MixerSettings,InitAUXPlaybackPos,0x00000001,80,28
+HKR,MixerSettings,InitMasterVolPlaybackPos,0x00000001,80,28
+HKR,MixerSettings,InitCDAudioPlaybackPos,0x00000001,60,28
+HKR,MixerSettings,InitPhonePlaybackPos,0x00000001,60,1c
+HKR,MixerSettings,InitPCBeepPlaybackPos,0x00000001,e0,26
+HKR,MixerSettings,InitLineInPlaybackPos,0x00000001,7f,28
+HKR,MixerSettings,InitMicrophonePlaybackPos,0x00000001,80,28
+HKR,MixerSettings,InitRecordingRecPos,0x00000001,80,16
+HKR,MixerSettings,InitAUXRecPos,0x00000001,00,00
+HKR,MixerSettings,InitCDAudioRecPos,0x00000001,00,00
+HKR,MixerSettings,InitLineInRecPos,0x00000001,00,00
+HKR,MixerSettings,InitStereoMixerRecPos,0x00000001,00,00
+HKR,MixerSettings,InitMonoMixerRecPos,0x00000001,00,00
+HKR,MixerSettings,InitMicRecPos,0x00000001,13,00
+
+
+HKR,MixerSettings,Mic20DBGain,0x00000001,01,00
+
+[PFBranch.AddReg]
+HKR,,HwSupportOptions,0x00000001,01,61,00,60
+HKR,,TopologyOptions,0x00000001,b5,03,00,00
+HKR,,SpeakerAutoSense,0x00000001,00
+HKR,MixerSettings,PreviousSpeakerType,0x00000001,01,00
+HKR,,HwDeviceID,0x00000001,06,11,58,30
+HKLM,"SOFTWARE\Conexant\Setup",DeviceId,,"VEN_1106&DEV_3058"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Conexant PCI Audio",DeviceID,,"VEN_1106&DEV_3058"
+
+[PFCommon.AddReg]
+HKR,,Driver,,cviaaud.sys 
+HKR,,AmcControllerID,0x00000001,02,00,00,00 
+
+[PFNonWS.AddReg]
+HKR,,NTMPDriver,,"cviaaud.sys,cviahal.sys,sbemul.sys"
+HKLM,"SOFTWARE\Conexant\Setup",MixerName,,%AMCAUD.Wave.szPname%
+HKLM,"SOFTWARE\Conexant\Setup",DeviceObject,,"ACVIAHALServiceProvider"
+
+[PFHal_NT.AddReg]
+HKR,,"LowerFilters",0x00010000,"cviahala"
+
+[PFBUninstall.AddReg] ;for inf deinstaller -xz
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Conexant PCI Audio",DisplayName,,%*WDM_AMCAUD.DeviceDesc%
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Conexant PCI Audio",UninstallString,,"CIAunwdm.exe"
+; Files to Delete...
+HKLM,"SOFTWARE\Conexant\WDM Audio\Files",cviaaud.sys,,"cviaaud.sys"
+HKLM,"SOFTWARE\Conexant\WDM Audio\Files",cviahal.sys,,"cviahal.sys"
+
+
+;*************************************
+; Interface installation sections 
+;*************************************
+[WDM_AMCAUD.Interfaces]
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_Wave%,AMCAUD.Interface.Wave
+AddInterface=%KSCATEGORY_RENDER%,%KSNAME_Wave%,AMCAUD.Interface.Wave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_Wave%,AMCAUD.Interface.Wave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_Topology%,AMCAUD.Interface.Topology
+
+[WDM_AMCAUD.NT.Interfaces]
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_Wave%,AMCAUD.Interface.Wave
+AddInterface=%KSCATEGORY_RENDER%,%KSNAME_Wave%,AMCAUD.Interface.Wave
+AddInterface=%KSCATEGORY_CAPTURE%,%KSNAME_Wave%,AMCAUD.Interface.Wave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_Topology%,AMCAUD.Interface.Topology
+
+[AMCAUD.Interface.Wave]
+AddReg=AMCAUD.I.Wave.AddReg
+[AMCAUD.I.Wave.AddReg]
+HKR,,CLSID,,%Proxy.CLSID%
+HKR,,FriendlyName,,%AMCAUD.Wave.szPname%
+
+[AMCAUD.Interface.Topology]
+AddReg=AMCAUD.I.Topo.AddReg, TopoCommon.AddReg
+[AMCAUD.I.Topo.AddReg]
+HKR,,CLSID,,%Proxy.CLSID%
+HKR,,FriendlyName,,%AMCAUD.Topology.szPname%
+
+[TopoCommon.AddReg]
+HKLM,%MediaCategories%\%KSAUDFNAME_AMCAUD_20DB_GAIN%,Name,,%AMCAUD_20DB_GAIN%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_VIDEO%,Name,,%AMCAUD_VIDEO%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_SMIXER%,Name,,%AMCAUD_SMIXER%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_MMIXER%,Name,,%AMCAUD_MMIXER%
+HKLM,%MediaCategories%\%KSAUDFNAME_BASS_BOOST%,Name,,%BASS_BOOST%
+HKLM,%MediaCategories%\%KSAUDFNAME_STEREO_ENHANCE%,Name,,%STEREO_ENHANCE%
+HKLM,%MediaCategories%\%KSAUDFNAME_AMCAUD_SP_MODE%,Name,,%AMCAUD_SP_MODE%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_SPKPHONE%,Name,,%AMCAUD_SPKPHONE%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_PCMOUT%,Name,,%AMCAUD_PCMOUT%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_WAVESTREAM%,Name,,%AMCAUD_WAVESTREAM%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_FM%,Name,,%AMCAUD_FM%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_MONOOUT%,Name,,%AMCAUD_MONOOUT%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_HPOUT%,Name,,%AMCAUD_HPOUT%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_PVR%,Name,,%AMCAUD_PVR%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_HRTF%,Name,,%AMCAUD_HRTF%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_EAX%,Name,,%AMCAUD_EAX%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_SPECIAL%,Name,,%AMCAUD_SPECIAL%
+HKLM,%MediaCategories%\%KSAUDFNAME_SPEAKER_AUTO%,Name,,%SPEAKER_AUTO%
+HKLM,%MediaCategories%\%KSAUDFNAME_SPEAKER_DIGITAL%,Name,,%SPEAKER_DIGITAL%
+HKLM,%MediaCategories%\%KSPINNAME_AMCAUD_3DLEVEL%,Name,,%AMCAUD_3DLEVEL%
+
+
+;*************************************
+; Service installation sections
+;*************************************
+[WDM_AMCAUD.Services]
+AddService=CVIAAUD,0x00000002,AMCAUD_Service_Inst
+AddService=CVIAHALA,0x00000000,AMCHAL_Service_Inst
+
+[WDM_AMCAUD.NT.Services]
+AddService=CVIAAUD,0x00000002,AMCAUD_Service_Inst
+AddService=CVIAHALA,0x00000000,AMCHAL_Service_Inst
+
+[AMCAUD_Service_Inst]
+DisplayName             = %AMCAUD.SvcDesc%
+ServiceType             = 1                  ; SERVICE_KERNEL_DRIVER
+StartType               = 3                  ; SERVICE_DEMAND_START
+ErrorControl            = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary           = %10%\system32\drivers\cviaaud.sys
+
+[AMCHAL_Service_Inst]
+ServiceType             = 1                  ; SERVICE_KERNEL_DRIVER
+StartType               = 3                  ; SERVICE_DEMAND_START
+ErrorControl            = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary           = %10%\system32\drivers\cviahal.sys
+
+
+;*************************************
+; Localizable text.
+;*************************************
+[Strings]
+;******************
+;Common Strings
+;******************
+MediaCategories="SYSTEM\CurrentControlSet\Control\MediaCategories"
+;MediaClassName = "Sound, video and game controllers"
+
+Proxy.CLSID="{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+KSCATEGORY_AUDIO="{6994AD04-93EF-11D0-A3CC-00A0C9223196}"
+KSCATEGORY_RENDER="{65E8773E-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_CAPTURE="{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+KSNAME_Wave="Wave"
+KSNAME_Topology="Topology"
+
+
+KSAUDFNAME_AMCAUD_20DB_GAIN="{185FEF02-9905-11D1-95A9-00C04FB925D3}"
+AMCAUD_20DB_GAIN="Microphone Boost"
+KSPINNAME_AMCAUD_VIDEO="{AD019006-6DB0-11D1-95A6-00C04FB925D3}"
+AMCAUD_VIDEO="Video"
+KSPINNAME_AMCAUD_SMIXER="{AD01900B-6DB0-11D1-95A6-00C04FB925D3}"
+AMCAUD_SMIXER="Stereo Mixer"
+KSPINNAME_AMCAUD_MMIXER="{AD01900C-6DB0-11D1-95A6-00C04FB925D3}"
+AMCAUD_MMIXER="Mono Mixer"
+KSAUDFNAME_BASS_BOOST="{185FEF03-9905-11D1-95A9-00C04FB925D3}"
+BASS_BOOST="Bass Boost"
+KSAUDFNAME_STEREO_ENHANCE="{185FEF04-9905-11D1-95A9-00C04FB925D3}"
+STEREO_ENHANCE="3D Stereo Enhance"
+KSPINNAME_AMCAUD_SPKPHONE="{185FEF05-9905-11D1-95A9-00C04FB925D3}"
+AMCAUD_SPKPHONE="Phone"
+KSPINNAME_AMCAUD_PCMOUT="{185FEF06-9905-11D1-95A9-00C04FB925D3}"
+AMCAUD_PCMOUT="All Digital"
+KSPINNAME_AMCAUD_WAVESTREAM="{185FEF07-9905-11D1-95A9-00C04FB925D3}"
+AMCAUD_WAVESTREAM="WaveStream"
+KSPINNAME_AMCAUD_PVR="{185FEF08-9905-11D1-95A9-00C04FB925D3}"
+AMCAUD_PVR="Voice Recognition"
+KSPINNAME_AMCAUD_FM="{AD01900D-6DB0-11D1-95A6-00C04FB925D3}"
+AMCAUD_FM="FM"
+KSPINNAME_AMCAUD_MONOOUT="{AD01900A-6DB0-11D1-95A6-00C04FB925D3}"
+AMCAUD_MONOOUT="Mono Out"
+KSPINNAME_AMCAUD_HPOUT="{AD019009-6DB0-11D1-95A6-00C04FB925D3}"
+AMCAUD_HPOUT="Headphone"
+KSPINNAME_AMCAUD_HRTF="{185FEF09-9905-11D1-95A9-00C04FB925D3}"
+AMCAUD_HRTF="All 2D"
+KSAUDFNAME_AMCAUD_SP_MODE="{185FEF0A-9905-11D1-95A9-00C04FB925D3}"
+AMCAUD_SP_MODE="Speaker Mode HRTF"
+KSPINNAME_AMCAUD_EAX="{185FEF0B-9905-11D1-95A9-00C04FB925D3}"
+AMCAUD_EAX="Reverb"
+KSPINNAME_AMCAUD_SPECIAL="{AD019007-6DB0-11D1-95A6-00C04FB925D3}"
+AMCAUD_SPECIAL="Special Controls"
+KSAUDFNAME_SPEAKER_AUTO="{185FEF0C-9905-11D1-95A9-00C04FB925D3}"
+SPEAKER_AUTO="Auto-detect Speaker Type"
+KSAUDFNAME_SPEAKER_DIGITAL="{185FEF0D-9905-11D1-95A9-00C04FB925D3}"
+SPEAKER_DIGITAL="Digital Speaker"
+KSPINNAME_AMCAUD_3DLEVEL="{837328E2-8F13-11d4-83E8-0001023F885F}"
+AMCAUD_3DLEVEL="3D Level"
+
+
+
+;********************
+;OEM Strings
+;********************
+MfgNameShort="Fujitsu"
+MfgNameLong="Fujitsu"
+DrvDiskName="Fujitsu VIA 3D Environmental Audio Driver Disk"
+*WDM_AMCAUD.DeviceDesc="Conexant AC-Link Audio"
+AMCAUD.SvcDesc="Fujitsu VIA 3D Environmental Audio"
+AMCAUD.Wave.szPname="Fujitsu VIA Audio"
+AMCAUD.Topology.szPname="Fujitsu VIA"

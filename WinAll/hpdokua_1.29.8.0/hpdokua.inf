@@ -1,0 +1,576 @@
+;******************************************************************
+;
+; Copyright (C) 2008-2011, Conexant Systems Inc.
+;
+;******************************************************************
+
+[Version]
+Signature   = "$Chicago$"
+Class       = MEDIA
+Provider    = %ProviderName%
+ClassGUID   = {4d36e96c-e325-11ce-bfc1-08002be10318}
+CatalogFile = hpdokua.cat
+DriverVer   = 03/22/2011, 1.29.8.0
+pnplockdown = 1
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[SourceDisksNames]
+222 = %SPoC.DiskDesc%,,,
+
+[SourceDisksFiles]
+usbaud32.sys = 222
+usbaud64.sys = 222
+UCI32S69.dll = 222
+UCI64S69.dll = 222
+SPOCJS32.dll = 222
+SPOCJS64.dll = 222
+UIU32s.exe   = 222
+UIU64s.exe   = 222
+
+[Manufacturer]
+%MfgName% = SPoC, NTx86.5, NTamd64.5, NTx86.6, NTamd64.6
+
+[SPoC.NTx86.5]
+%SPoC.DeviceDesc% = USBAUD.NTx86.5,   USB\VID_0572&PID_1401&MI_00
+
+[SPoC.NTamd64.5]
+%SPoC.DeviceDesc% = USBAUD.NTamd64.5, USB\VID_0572&PID_1401&MI_00
+
+[SPoC.NTx86.6]
+%SPoC.DeviceDesc% = USBAUD.NTx86.6,   USB\VID_0572&PID_1401&MI_00
+
+[SPoC.NTamd64.6]
+%SPoC.DeviceDesc% = USBAUD.NTamd64.6, USB\VID_0572&PID_1401&MI_00
+
+[DestinationDirs]
+USBAUD32.CopyFiles      = 12
+USBAUD64.CopyFiles      = 12
+CoInstaller32.CopyFiles = 11
+CoInstaller64.CopyFiles = 11
+SPOCJS32.CopyFiles      = 11
+SPOCJS64.CopyFiles      = 10,SysWOW64
+Uninstall32.CopyFiles   = 16422,CONEXANT\%UIPATH%
+Uninstall64.CopyFiles   = 16422,CONEXANT\%UIPATH%
+
+[USBAUD32.CopyFiles]
+usbaud32.sys
+
+[USBAUD64.CopyFiles]
+usbaud64.sys
+
+[CoInstaller32.CopyFiles]
+UCI32S69.dll
+ 
+[CoInstaller64.CopyFiles]
+UCI64S69.dll
+
+[SPOCJS32.CopyFiles]
+SPOCJS32.dll
+
+[SPOCJS64.CopyFiles]
+SPOCJS64.dll
+
+[Uninstall32.CopyFiles]
+UIU32s.exe
+
+[Uninstall64.CopyFiles]
+UIU64s.exe
+
+;======================================================
+; USBAUD.NTx86.5
+;======================================================
+
+[USBAUD.NTx86.5]
+Include   = ks.inf,wdmaudio.inf
+Needs     = KS.Registration, WDMAUDIO.Registration
+CopyFiles = USBAUD32.CopyFiles, Uninstall32.CopyFiles
+CopyFiles = SPOCJS32.CopyFiles
+AddReg    = USBAUD.AddReg, USBAUD32.AddReg, AudioParameters.AddReg, Volume.AddReg, Uninstall.AddReg, Uninstall32.AddReg
+
+[USBAUD.NTx86.5.CoInstallers]
+AddReg    = CoInstaller.AddReg, CoInstaller32.AddReg
+CopyFiles = CoInstaller32.CopyFiles
+ 
+[USBAUD.NTx86.5.Interfaces]
+AddInterface = %KSCATEGORY_AUDIO%,   %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_RENDER%,  %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_CAPTURE%, %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_AUDIO%,   %KSNAME_Topology%, USBAUD.I.Topo
+
+[USBAUD.NTx86.5.Services]
+AddService = usbaud, 0x00000002, ConexantUsbAudio32_Service_Inst
+AddService = %SpocJS.Name%, 0x00000000, ConexantSpocJS32_Service_Inst
+
+;======================================================
+; USBAUD.NTamd64.5
+;======================================================
+
+[USBAUD.NTamd64.5]
+Include   = ks.inf,wdmaudio.inf
+Needs     = KS.Registration, WDMAUDIO.Registration
+CopyFiles = USBAUD64.CopyFiles, Uninstall64.CopyFiles
+CopyFiles = SPOCJS64.CopyFiles
+AddReg    = USBAUD.AddReg, USBAUD64.AddReg, AudioParameters.AddReg, Volume.AddReg, Uninstall.AddReg, Uninstall64.AddReg
+ 
+[USBAUD.NTamd64.5.CoInstallers]
+AddReg    = CoInstaller.AddReg, CoInstaller64.AddReg
+CopyFiles = CoInstaller64.CopyFiles
+ 
+[USBAUD.NTamd64.5.Interfaces]
+AddInterface = %KSCATEGORY_AUDIO%,   %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_RENDER%,  %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_CAPTURE%, %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_AUDIO%,   %KSNAME_Topology%, USBAUD.I.Topo
+
+[USBAUD.NTamd64.5.Services]
+AddService = usbaud, 0x00000002, ConexantUsbAudio64_Service_Inst
+AddService = %SpocJS.Name%, 0x00000000, ConexantSpocJS64_Service_Inst
+
+;======================================================
+; USBAUD.NTx86.6
+;======================================================
+
+[USBAUD.NTx86.6]
+Include   = ks.inf,wdmaudio.inf
+Needs     = KS.Registration, WDMAUDIO.Registration
+CopyFiles = USBAUD32.CopyFiles, Uninstall32.CopyFiles
+CopyFiles = SPOCJS32.CopyFiles
+AddReg    = USBAUD.AddReg, USBAUD32.AddReg, AudioParameters.AddReg, Volume.6.AddReg, Uninstall.AddReg, Uninstall32.AddReg
+
+[USBAUD.NTx86.6.CoInstallers]
+AddReg    = CoInstaller.AddReg, CoInstaller32.AddReg
+CopyFiles = CoInstaller32.CopyFiles
+ 
+[USBAUD.NTx86.6.Interfaces]
+AddInterface = %KSCATEGORY_AUDIO%,   %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_RENDER%,  %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_CAPTURE%, %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_AUDIO%,   %KSNAME_Topology%, USBAUD.I.Topo
+
+[USBAUD.NTx86.6.Services]
+AddService = usbaud, 0x00000002, ConexantUsbAudio32_Service_Inst
+AddService = %SpocJS.Name%, 0x00000000, ConexantSpocJS32_Service_Inst
+
+;======================================================
+; USBAUD.NTamd64.6
+;======================================================
+
+[USBAUD.NTamd64.6]
+Include   = ks.inf,wdmaudio.inf
+Needs     = KS.Registration, WDMAUDIO.Registration
+CopyFiles = USBAUD64.CopyFiles, Uninstall64.CopyFiles
+CopyFiles = SPOCJS64.CopyFiles
+AddReg    = USBAUD.AddReg, USBAUD64.AddReg, AudioParameters.AddReg, Volume.6.AddReg, Uninstall.AddReg, Uninstall64.AddReg
+ 
+[USBAUD.NTamd64.6.CoInstallers]
+AddReg    = CoInstaller.AddReg, CoInstaller64.AddReg
+CopyFiles = CoInstaller64.CopyFiles
+ 
+[USBAUD.NTamd64.6.Interfaces]
+AddInterface = %KSCATEGORY_AUDIO%,   %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_RENDER%,  %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_CAPTURE%, %KSNAME_Wave%,     USBAUD.I.Wave
+AddInterface = %KSCATEGORY_AUDIO%,   %KSNAME_Topology%, USBAUD.I.Topo
+
+[USBAUD.NTamd64.6.Services]
+AddService = usbaud, 0x00000002, ConexantUsbAudio64_Service_Inst
+AddService = %SpocJS.Name%, 0x00000000, ConexantSpocJS64_Service_Inst
+
+[ConexantUsbAudio32_Service_Inst]
+DisplayName   = %SPoC.SvcDesc%
+ServiceType   = 1
+StartType     = 3
+ErrorControl  = 1
+ServiceBinary = %12%\usbaud32.sys
+
+[ConexantSpocJS32_Service_Inst]
+DisplayName    = %SpocJS.DisplayName%
+Description    = %SpocJS.Description%
+ServiceType    = 0x10
+StartType      = 2
+ErrorControl   = 1
+ServiceBinary  = %11%\svchost.exe -k %SpocJS.Name%
+AddReg         = SpocJS32.AddReg
+StartName      = "NT AUTHORITY\LocalService"
+
+[SpocJS32.AddReg]
+HKR, Parameters, ServiceDll,  0x00020000,  "%11%\SPOCJS32.DLL"
+HKR, Parameters, ServiceMain, 0x00000000,  "ServiceMain"
+HKLM,"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost",%SpocJS.Name%,0x00010008,%SpocJS.Name%
+
+[ConexantUsbAudio64_Service_Inst]
+DisplayName   = %SPoC.SvcDesc%
+ServiceType   = 1
+StartType     = 3
+ErrorControl  = 1
+ServiceBinary = %12%\usbaud64.sys
+
+[ConexantSpocJS64_Service_Inst]
+DisplayName    = %SpocJS.DisplayName%
+Description    = %SpocJS.Description%
+ServiceType    = 0x10
+StartType      = 2
+ErrorControl   = 1
+ServiceBinary  = %11%\svchost.exe -k %SpocJS.Name%
+AddReg         = SpocJS64.AddReg
+StartName      = "NT AUTHORITY\LocalService"
+
+[SpocJS64.AddReg]
+HKR, Parameters, ServiceDll,  0x00020000,  "%10%\SysWOW64\SPOCJS64.DLL"
+HKR, Parameters, ServiceMain, 0x00000000,  "ServiceMain"
+HKLM,"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost",%SpocJS.Name%,0x00010008,%SpocJS.Name%
+
+;======================================================
+; COMMON
+;======================================================
+[USBAUD.AddReg]
+HKR,,AssociatedFilters,,"wdmaud,swmidi,redbook"
+HKR,Drivers,SubClasses,,"wave,midi,mixer"
+HKR,Drivers\wave\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\midi\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\mixer\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\wave\wdmaud.drv,Description,,%SPoC.DeviceDesc%
+HKR,Drivers\midi\wdmaud.drv,Description,,%SPoC.MidiDesc%
+HKR,Drivers\mixer\wdmaud.drv,Description,,%SPoC.DeviceDesc%
+
+[USBAUD32.AddReg]
+HKR,,Driver,,usbaud32.sys
+HKR,,NTMPDriver,,"usbaud32.sys,sbemul.sys"
+
+[USBAUD64.AddReg]
+HKR,,Driver,,usbaud64.sys
+HKR,,NTMPDriver,,"usbaud64.sys,sbemul.sys"
+
+[USBAUD.I.Wave]
+AddReg=USBAUD.I.Wave.AddReg
+
+[USBAUD.I.Wave.AddReg]
+HKR,,CLSID,,%Proxy.CLSID%
+HKR,,FriendlyName,,%USBAUD.Wave.szPname%
+ 
+[USBAUD.I.Topo]
+AddReg=USBAUD.I.Topo.AddReg
+
+[USBAUD.I.Topo.AddReg]
+HKR,,CLSID,,%Proxy.CLSID%
+HKR,,FriendlyName,,%USBAUD.Topo.szPname%
+
+[CoInstaller.AddReg]
+HKR,,CompanyName,,%CompanyName%
+HKR,,ProductName,,%ProductName%
+HKR,,InstallationPath,,%1%
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Services\Stop,%SpocJS.Name%,,0x00000115
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Services\Start,%SpocJS.Name%,,0x00000222
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\RegValues,"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost\%SpocJS.Name%",,0x00000115
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\RegKeys,"Software\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%",,0x00000008
+
+[CoInstaller32.AddReg]
+HKR,,CoInstallers32,0x00010000,"UCI32S69.dll,CAUDCoInstaller"
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files\SYS,usbaud32.sys,,0x00000008
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files\VXDDLL,SPOCJS32.dll,,0x00000008
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%16422%\CONEXANT\%UIPATH%\UIU32s.exe",,0x00000008
+
+[CoInstaller64.AddReg]
+HKR,,CoInstallers32,0x00010000,"UCI64S69.dll,CAUDCoInstaller"
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files\SYS,usbaud64.sys,,0x00000008
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files\VXDDLL,SPOCJS64.dll,,0x00000008
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%16422%\CONEXANT\%UIPATH%\UIU64s.exe",,0x00000008
+
+[Uninstall.AddReg]
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, DisplayName,,    %SPoC.DeviceDesc%
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, DisplayVersion,, %VersionInfo%
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, VersionMajor,,   1
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, VersionMinor,,   29
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, Publisher,,      %PublisherName%
+
+[Uninstall32.AddReg]
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, DisplayIcon,,     %16422%\CONEXANT\%UIPATH%\UIU32s.exe
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, UninstallString,, %16422%\CONEXANT\%UIPATH%\UIU32s.exe -U -Ihpdokua.inf
+
+[Uninstall64.AddReg]
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, DisplayIcon,,     %16422%\CONEXANT\%UIPATH%\UIU64s.exe
+HKLM, SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%UIPATH%, UninstallString,, %16422%\CONEXANT\%UIPATH%\UIU64s.exe -U -Ihpdokua.inf
+
+;======================================================
+; Audio settings                                   
+;======================================================
+[Volume.AddReg]
+HKR,GlobalSettings,PlaybackVolume,          1,5C,00,00,00  ;
+HKR,GlobalSettings,RecordingMicVolume,      1,50,00,00,00  ; 
+HKR,GlobalSettings,RecordingLineInVolume,   1,50,00,00,00  ;
+
+[Volume.6.AddReg]
+HKR,GlobalSettings,PlaybackVolume,          1,56,00,00,00  ;
+HKR,GlobalSettings,RecordingMicVolume,      1,51,00,00,00  ; 
+HKR,GlobalSettings,RecordingLineInVolume,   1,51,00,00,00  ;
+
+[AudioParameters.AddReg]
+
+HKR,,EnableWaveRT,                          1,01,00,00,00
+
+HKR,GlobalSettings,BeamWidth,               1,64,00,14,00  ;; Beam Width and Mic Array Seperation
+HKR,GlobalSettings,MicDelay,                1,1E,00,00,00  ; Microphone Delay for Echo Cancelation (in milliseconds)
+HKR,GlobalSettings,MicNrAgressivenessLevel, 1,08,00,00,00  ; Aggressiveness of Noise Reduction (0-8)
+HKR,GlobalSettings,MicBoostBeforeNR,        1,14,00,00,00  ; Gain before Noise Reduction
+HKR,GlobalSettings,MicBoostAfterNR,         1,00,00,00,00  ; Gain after  Noise Reduction
+
+HKLM,SYSTEM\CurrentControlSet\Services\usbaud, DefaultSettings,0x00000001,0,1,0
+
+HKR,EQ\1,SystemName,,Speaker On A Chip
+
+HKR,EQ\1\0,ProfileName,,Default
+HKR,EQ\1\0,SpeakerApplication,,InternalSpeaker
+HKR,EQ\1\0,Cancel,0x00010001,00,00,00,00
+HKR,EQ\1\0,Channel,0x00010001,09,00,00,00
+HKR,EQ\1\0,NumBands,0x00010001,0a,00,00,00
+HKR,EQ\1\0,ClippingCtrlVol,0x00010001,ff,7f,00,00
+HKR,EQ\1\0,LinearGain,0x00010001,00,00,00,00
+HKR,EQ\1\0,DRCEnable,0x00010001,00,cc,cc,cc
+HKR,EQ\1\0,Threshold,0x00010001,00,00,00,00
+HKR,EQ\1\0,MaxInputLevel,0x00010001,00,00,00,00
+HKR,EQ\1\0,MaxOutputLevel,0x00010001,00,00,00,00
+HKR,EQ\1\0,AttackTimeInMS,0x00010001,14,00,00,00
+HKR,EQ\1\0,ReleaseTimeInMS,0x00010001,00,14,00,00
+
+HKR,EQ\1\0\Band1,Flags1,0x00010001,01,01,01,00
+HKR,EQ\1\0\Band1,Freq1,0x00010001,1f,00,00,00
+HKR,EQ\1\0\Band1,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band1,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band2,Flags1,0x00010001,00,01,02,00
+HKR,EQ\1\0\Band2,Freq1,0x00010001,3e,00,00,00
+HKR,EQ\1\0\Band2,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band2,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band3,Flags1,0x00010001,00,01,04,00
+HKR,EQ\1\0\Band3,Freq1,0x00010001,7d,00,00,00
+HKR,EQ\1\0\Band3,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band3,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band4,Flags1,0x00010001,00,01,08,00
+HKR,EQ\1\0\Band4,Freq1,0x00010001,fa,00,00,00
+HKR,EQ\1\0\Band4,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band4,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band5,Flags1,0x00010001,00,01,10,00
+HKR,EQ\1\0\Band5,Freq1,0x00010001,f4,01,00,00
+HKR,EQ\1\0\Band5,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band5,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band6,Flags1,0x00010001,00,01,20,00
+HKR,EQ\1\0\Band6,Freq1,0x00010001,e8,03,00,00
+HKR,EQ\1\0\Band6,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band6,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band7,Flags1,0x00010001,00,01,40,00
+HKR,EQ\1\0\Band7,Freq1,0x00010001,d0,07,00,00
+HKR,EQ\1\0\Band7,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band7,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band8,Flags1,0x00010001,00,01,80,00
+HKR,EQ\1\0\Band8,Freq1,0x00010001,a0,0f,00,00
+HKR,EQ\1\0\Band8,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band8,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band9,Flags1,0x00010001,00,01,00,01
+HKR,EQ\1\0\Band9,Freq1,0x00010001,40,1f,00,00
+HKR,EQ\1\0\Band9,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band9,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band10,Flags1,0x00010001,02,01,00,02
+HKR,EQ\1\0\Band10,Freq1,0x00010001,80,3e,00,00
+HKR,EQ\1\0\Band10,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band10,Gainx1001,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band1,Flags2,0x00010001,01,02,01,00
+HKR,EQ\1\0\Band1,Freq2,0x00010001,1f,00,00,00
+HKR,EQ\1\0\Band1,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band1,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band2,Flags2,0x00010001,00,02,02,00
+HKR,EQ\1\0\Band2,Freq2,0x00010001,3e,00,00,00
+HKR,EQ\1\0\Band2,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band2,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band3,Flags2,0x00010001,00,02,04,00
+HKR,EQ\1\0\Band3,Freq2,0x00010001,7d,00,00,00
+HKR,EQ\1\0\Band3,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band3,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band4,Flags2,0x00010001,00,02,08,00
+HKR,EQ\1\0\Band4,Freq2,0x00010001,fa,00,00,00
+HKR,EQ\1\0\Band4,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band4,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band5,Flags2,0x00010001,00,02,10,00
+HKR,EQ\1\0\Band5,Freq2,0x00010001,f4,01,00,00
+HKR,EQ\1\0\Band5,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band5,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band6,Flags2,0x00010001,00,02,20,00
+HKR,EQ\1\0\Band6,Freq2,0x00010001,e8,03,00,00
+HKR,EQ\1\0\Band6,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band6,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band7,Flags2,0x00010001,00,02,40,00
+HKR,EQ\1\0\Band7,Freq2,0x00010001,d0,07,00,00
+HKR,EQ\1\0\Band7,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band7,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band8,Flags2,0x00010001,00,02,80,00
+HKR,EQ\1\0\Band8,Freq2,0x00010001,a0,0f,00,00
+HKR,EQ\1\0\Band8,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band8,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band9,Flags2,0x00010001,00,02,00,01
+HKR,EQ\1\0\Band9,Freq2,0x00010001,40,1f,00,00
+HKR,EQ\1\0\Band9,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band9,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\0\Band10,Flags2,0x00010001,02,02,00,02
+HKR,EQ\1\0\Band10,Freq2,0x00010001,80,3e,00,00
+HKR,EQ\1\0\Band10,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\0\Band10,Gainx1002,0x00010001,00,00,00,00
+
+HKR,EQ\1\1,ProfileName,,HP USB Media Port Rep Audio
+HKR,EQ\1\1,SpeakerApplication,,DockingSpeakers
+HKR,EQ\1\1,Cancel,0x00010001,00,00,00,00
+HKR,EQ\1\1,Channel,0x00010001,09,00,00,00
+HKR,EQ\1\1,NumBands,0x00010001,0A,00,00,00
+HKR,EQ\1\1,ClippingCtrlVol,0x00010001,FF,7F,00,00
+HKR,EQ\1\1,DRCEnable,0x00010001,01,00,00,00
+HKR,EQ\1\1,AttackTime,0x00010001,A0,00,00,00
+HKR,EQ\1\1,AttackTimeInMS,0x00010001,A0,00,00,00
+HKR,EQ\1\1,ReleaseTime,0x00010001,00,05,00,00
+HKR,EQ\1\1,ReleaseTimeInMS,0x00010001,00,05,00,00
+HKR,EQ\1\1,Threshold,0x00010001,00,00,00,00
+HKR,EQ\1\1,LinearGain,0x00010001,00,00,40,40
+HKR,EQ\1\1,MaxInputLevel,0x00010001,00,00,00,00
+HKR,EQ\1\1,MaxOutputLevel,0x00010001,00,00,00,00
+ 
+HKR,EQ\1\1\Band1,Flags1,0x00010001,00,01,01,00
+HKR,EQ\1\1\Band1,Freq1,0x00010001,20,00,00,00
+HKR,EQ\1\1\Band1,BWx1001,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band1,Gainx1001,0x00010001,A4,F2,FF,FF
+ 
+HKR,EQ\1\1\Band2,Flags1,0x00010001,00,01,02,00
+HKR,EQ\1\1\Band2,Freq1,0x00010001,3E,00,00,00
+HKR,EQ\1\1\Band2,BWx1001,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band2,Gainx1001,0x00010001,59,FD,FF,FF
+ 
+HKR,EQ\1\1\Band3,Flags1,0x00010001,00,01,04,00
+HKR,EQ\1\1\Band3,Freq1,0x00010001,7D,00,00,00
+HKR,EQ\1\1\Band3,BWx1001,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band3,Gainx1001,0x00010001,D4,FE,FF,FF
+ 
+HKR,EQ\1\1\Band4,Flags1,0x00010001,00,01,08,00
+HKR,EQ\1\1\Band4,Freq1,0x00010001,FA,00,00,00
+HKR,EQ\1\1\Band4,BWx1001,0x00010001,64,00,00,00
+HKR,EQ\1\1\Band4,Gainx1001,0x00010001,00,00,00,00
+ 
+HKR,EQ\1\1\Band5,Flags1,0x00010001,00,01,10,00
+HKR,EQ\1\1\Band5,Freq1,0x00010001,F4,01,00,00
+HKR,EQ\1\1\Band5,BWx1001,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band5,Gainx1001,0x00010001,DC,00,00,00
+ 
+HKR,EQ\1\1\Band6,Flags1,0x00010001,00,01,20,00
+HKR,EQ\1\1\Band6,Freq1,0x00010001,E8,03,00,00
+HKR,EQ\1\1\Band6,BWx1001,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band6,Gainx1001,0x00010001,D4,FE,FF,FF
+ 
+HKR,EQ\1\1\Band7,Flags1,0x00010001,00,01,40,00
+HKR,EQ\1\1\Band7,Freq1,0x00010001,D0,07,00,00
+HKR,EQ\1\1\Band7,BWx1001,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band7,Gainx1001,0x00010001,C8,00,00,00
+ 
+HKR,EQ\1\1\Band8,Flags1,0x00010001,00,01,80,00
+HKR,EQ\1\1\Band8,Freq1,0x00010001,A0,0F,00,00
+HKR,EQ\1\1\Band8,BWx1001,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band8,Gainx1001,0x00010001,D4,FE,FF,FF
+ 
+HKR,EQ\1\1\Band9,Flags1,0x00010001,00,01,00,01
+HKR,EQ\1\1\Band9,Freq1,0x00010001,40,1F,00,00
+HKR,EQ\1\1\Band9,BWx1001,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band9,Gainx1001,0x00010001,C8,00,00,00
+ 
+HKR,EQ\1\1\Band10,Flags1,0x00010001,00,01,00,02
+HKR,EQ\1\1\Band10,Freq1,0x00010001,E0,2E,00,00
+HKR,EQ\1\1\Band10,BWx1001,0x00010001,C5,00,00,00
+HKR,EQ\1\1\Band10,Gainx1001,0x00010001,90,01,00,00
+ 
+HKR,EQ\1\1\Band1,Flags2,0x00010001,00,02,01,00
+HKR,EQ\1\1\Band1,Freq2,0x00010001,20,00,00,00
+HKR,EQ\1\1\Band1,BWx1002,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band1,Gainx1002,0x00010001,A4,F2,FF,FF
+ 
+HKR,EQ\1\1\Band2,Flags2,0x00010001,00,02,02,00
+HKR,EQ\1\1\Band2,Freq2,0x00010001,3E,00,00,00
+HKR,EQ\1\1\Band2,BWx1002,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band2,Gainx1002,0x00010001,59,FD,FF,FF
+ 
+HKR,EQ\1\1\Band3,Flags2,0x00010001,00,02,04,00
+HKR,EQ\1\1\Band3,Freq2,0x00010001,7D,00,00,00
+HKR,EQ\1\1\Band3,BWx1002,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band3,Gainx1002,0x00010001,D4,FE,FF,FF
+ 
+HKR,EQ\1\1\Band4,Flags2,0x00010001,00,02,08,00
+HKR,EQ\1\1\Band4,Freq2,0x00010001,FA,00,00,00
+HKR,EQ\1\1\Band4,BWx1002,0x00010001,64,00,00,00
+HKR,EQ\1\1\Band4,Gainx1002,0x00010001,00,00,00,00
+ 
+HKR,EQ\1\1\Band5,Flags2,0x00010001,00,02,10,00
+HKR,EQ\1\1\Band5,Freq2,0x00010001,F4,01,00,00
+HKR,EQ\1\1\Band5,BWx1002,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band5,Gainx1002,0x00010001,DC,00,00,00
+ 
+HKR,EQ\1\1\Band6,Flags2,0x00010001,00,02,20,00
+HKR,EQ\1\1\Band6,Freq2,0x00010001,E8,03,00,00
+HKR,EQ\1\1\Band6,BWx1002,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band6,Gainx1002,0x00010001,D4,FE,FF,FF
+ 
+HKR,EQ\1\1\Band7,Flags2,0x00010001,00,02,40,00
+HKR,EQ\1\1\Band7,Freq2,0x00010001,D0,07,00,00
+HKR,EQ\1\1\Band7,BWx1002,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band7,Gainx1002,0x00010001,C8,00,00,00
+ 
+HKR,EQ\1\1\Band8,Flags2,0x00010001,00,02,80,00
+HKR,EQ\1\1\Band8,Freq2,0x00010001,A0,0F,00,00
+HKR,EQ\1\1\Band8,BWx1002,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band8,Gainx1002,0x00010001,D4,FE,FF,FF
+ 
+HKR,EQ\1\1\Band9,Flags2,0x00010001,00,02,00,01
+HKR,EQ\1\1\Band9,Freq2,0x00010001,40,1F,00,00
+HKR,EQ\1\1\Band9,BWx1002,0x00010001,63,00,00,00
+HKR,EQ\1\1\Band9,Gainx1002,0x00010001,C8,00,00,00
+ 
+HKR,EQ\1\1\Band10,Flags2,0x00010001,00,02,00,02
+HKR,EQ\1\1\Band10,Freq2,0x00010001,E0,2E,00,00
+HKR,EQ\1\1\Band10,BWx1002,0x00010001,C5,00,00,00
+HKR,EQ\1\1\Band10,Gainx1002,0x00010001,90,01,00,00
+
+[Strings]
+ProviderName        = "Conexant Systems, Inc."
+MfgName             = "Conexant Systems"
+PublisherName       = "Conexant Systems"
+CompanyName         = "Conexant"
+ProductName         = "HP USB Media Port Rep Audio"
+SPoC.DeviceDesc     = "HP USB Media Port Rep Audio"
+SPoC.SvcDesc        = "HP USB Media Port Rep Audio"
+SPoC.MidiDesc       = "HP USB Media Port Rep Audio"
+SPoC.DiskDesc       = "HP USB Media Port Rep Audio Installation Disk"
+USBAUD.Wave.szPname = "HP USB Media Port Rep Audio"
+USBAUD.Topo.szPname = "HP USB Media Port Rep Audio Topology"
+VersionInfo         = "1.29.8.0"
+UIPATH              = "CNXT_AUDIO_USB"
+Proxy.CLSID         = "{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+KSCATEGORY_AUDIO    = "{6994AD04-93EF-11D0-A3CC-00A0C9223196}"
+KSCATEGORY_RENDER   = "{65E8773E-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_CAPTURE  = "{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+KSNAME_Wave         = "Wave"
+KSNAME_Topology     = "Topology"
+SpocJS.Name         = "SPOCJS"
+SpocJS.DisplayName  = "Jack Sensing Service for USB Audio"
+SpocJS.Description  = "User-mode service to detect jack plug/unplug for USB Audio"
+

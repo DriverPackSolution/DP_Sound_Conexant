@@ -1,0 +1,696 @@
+; SRS Universal APO - TSHD, CSII, CSHP, WOWHD, HP360, VIQ, MaxV, VOICE, and VIP+
+; Copyright (c) 2008-2010 SRS Labs, Inc.
+
+[Version]
+Signature="$CHICAGO$"
+Class=MEDIA
+ClassGUID={4d36e96c-e325-11ce-bfc1-08002be10318}
+provider=%ProviderName%
+DriverVer = 09/17/2010, 1.8.78.0
+CatalogFile=SRSPremSoundAPO_Conexant.cat
+
+[SourceDisksNames]
+222=%DiskDescription%,,,
+
+[SourceDisksFiles]
+slInit32.dll=222
+sluapo32.dll=222
+slprop32.dll=222
+sltshd32.dll=222
+slcshp32.dll=222
+slh36032.dll=222
+slmaxv32.dll=222
+slInit64.dll=222
+sluapo64.dll=222
+slprop64.dll=222
+sltshd64.dll=222
+slcshp64.dll=222
+slh36064.dll=222
+slmaxv64.dll=222
+UIU32a.exe=222
+UIU64a.exe=222
+UCI32A63.dll=222
+UCI64A63.dll=222
+
+[DestinationDirs]
+SysFx.NTx86.CopyList=11,SRSLabs\%SYSFX_PREMIX_CLSID% 
+SysFx.NTamd64.CopyList=11,SRSLabs\%SYSFX_PREMIX_CLSID%
+Uninstaller.NTx86.CopyFiles=16422,SRSLabs\%SRSAudioID%
+Uninstaller.NTamd64.CopyFiles=16422,SRSLabs\%SRSAudioID%
+SysFx.NTx86.CoInstaller.CopyFiles=10,system32
+SysFx.NTamd64.CoInstaller.CopyFiles=10,system32
+
+[Manufacturer]
+%MfgName%=SRSLabs, ntx86, ntamd64
+
+;; Uses the generic class driver for now
+[SRSLabs.NTx86]
+%SRSAudioID%=USBAudio.SysFx,USB\VID_0572&PID_140B&MI_00
+%SRSAudioID%=USBAudio.SysFx,USB\VID_0572&PID_1412&MI_00
+
+[SRSLabs.NTamd64]
+%SRSAudioID%=USBAudio.SysFx,USB\VID_0572&PID_140B&MI_00
+%SRSAudioID%=USBAudio.SysFx,USB\VID_0572&PID_1412&MI_00
+
+;;
+;;  Include/Need sections from OS installed wdma_usb.inf file
+;;
+[USBAudio.SysFx.NTx86]
+Include=ks.inf, wdmaudio.inf, wdma_usb.inf
+Needs=KS.Registration, WDMAUDIO.Registration, USBAudioOEM.CopyFiles, USBAudioOEM.AddReg
+AddProperty=OEMCustomBranding.AddProperty,SupportedTech.AddProperty
+CopyFiles=SysFx.NTx86.CopyList,Uninstaller.NTx86.CopyFiles
+RegisterDlls=SysFx.NTx86.RegisterDlls
+AddReg=SysFx.NTx86.RunOnceReg,Uninstaller.NTx86.AddReg
+
+[USBAudio.SysFx.NTamd64]
+Include=ks.inf, wdmaudio.inf, wdma_usb.inf
+Needs=KS.Registration, WDMAUDIO.Registration, USBAudioOEM.CopyFiles, USBAudioOEM.AddReg
+AddProperty=OEMCustomBranding.AddProperty,SupportedTech.AddProperty
+CopyFiles=SysFx.NTamd64.CopyList,Uninstaller.NTamd64.CopyFiles
+RegisterDlls=SysFx.NTamd64.RegisterDlls
+AddReg=SysFx.NTamd64.RunOnceReg,Uninstaller.NTamd64.AddReg
+
+;
+; These RunOnce keys are critical for proper APO installation. They handle the
+; final initialization of the APO. The APO will NOT function correctly until
+; the DLL is called.
+[SysFx.NTx86.RunOnceReg]
+HKLM,%RunOnce%,"SRS_APO_Install",,"rundll32.exe %11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slInit32.dll,SRS_InitializeEndpoints_Rundll32"
+
+[SysFx.NTamd64.RunOnceReg]
+HKLM,%RunOnce%,"SRS_APO_Install",,"rundll32.exe %11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slInit64.dll,SRS_InitializeEndpoints_Rundll32"
+
+[USBAudio.SysFx.NTx86.Interfaces]
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eLineOutWave%, USBAudio.SysFx.PrimaryLineOutWave
+AddInterface=%KSCATEGORY_RENDER%,%KSNAME_eLineOutWave%, USBAudio.SysFx.PrimaryLineOutWave
+;;AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eLineOutTopo%, USBAudio.SysFx.PrimaryLineOutTopo
+;;AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_eLineOutTopo%, USBAudio.SysFx.PrimaryLineOutTopo
+
+[USBAudio.SysFx.NTamd64.Interfaces]
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eLineOutWave%, USBAudio.SysFx.PrimaryLineOutWave
+AddInterface=%KSCATEGORY_RENDER%,%KSNAME_eLineOutWave%, USBAudio.SysFx.PrimaryLineOutWave
+;;AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_eLineOutTopo%, USBAudio.SysFx.PrimaryLineOutTopo
+;;AddInterface=%KSCATEGORY_TOPOLOGY%,%KSNAME_eLineOutTopo%, USBAudio.SysFx.PrimaryLineOutTopo
+
+[USBAudio.SysFx.PrimaryLineOutWave]
+AddReg = USBAudio.SysFx.PrimaryLineOutWave.AddReg, SysFx.AddReg
+
+[USBAudio.SysFx.PrimaryLineOutWave.AddReg]
+HKR,,FriendlyName,,%PrimarySpeakerWaveDeviceName%
+HKR,,CLSID,,%Proxy.CLSID%
+
+;;[USBAudio.SysFx.PrimaryLineOutTopo]
+;;AddReg = SysFx.AddReg, OEMSettingsOverride.AddReg
+
+;;[USBAudio.PrimaryLineOutTopo.AddReg]
+;;HKR,,FriendlyName,,%PrimarySpeakerTopoDeviceName%
+;;HKR,,CLSID,,%Proxy.CLSID%
+
+[USBAudio.SysFx.NTx86.Services]
+Include=wdma_usb.inf
+Needs=USBAudio.NT.Services
+
+[USBAudio.SysFx.NTamd64.Services]
+Include=wdma_usb.inf
+Needs=USBAudio.NT.Services
+
+[USBAudio.SysFx.NTx86.CoInstallers]
+AddReg=SysFx.NTx86.CoInstaller.AddReg,SysFx.CoInstaller.AddReg,SysFx.CoInstaller.AddReg32
+CopyFiles=SysFx.NTx86.CoInstaller.CopyFiles
+
+[SysFx.NTx86.CoInstaller.CopyFiles]
+UCI32A63.dll
+
+[SysFx.NTx86.CoInstaller.AddReg]
+HKR,,CoInstallers32,0x00010000,"UCI32A63.dll,CAUDCoInstaller"
+
+[USBAudio.SysFx.NTamd64.CoInstallers]
+AddReg=SysFx.NTamd64.CoInstaller.AddReg,SysFx.CoInstaller.AddReg,SysFx.CoInstaller.AddReg64
+CopyFiles=SysFx.NTamd64.CoInstaller.CopyFiles
+
+[SysFx.NTamd64.CoInstaller.CopyFiles]
+UCI64A63.dll
+
+[SysFx.NTamd64.CoInstaller.AddReg]
+HKR,,CoInstallers32,0x00010000,"UCI64A63.dll,CAUDCoInstaller"
+
+[SysFx.CoInstaller.AddReg]
+HKR,,CompanyName,,%CompanyName%
+HKR,,ProductName,,%ProductName%
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\RegKeys,"Software\Microsoft\Windows\CurrentVersion\Uninstall",,%SRSAudioID%
+
+[SysFx.CoInstaller.AddReg32]
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slInit32.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\sluapo32.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slprop32.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\sltshd32.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slcshp32.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slh36032.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slmaxv32.dll",,0x01000004
+
+[SysFx.CoInstaller.AddReg64]
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slInit64.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\sluapo64.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slprop64.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\sltshd64.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slcshp64.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slh36064.dll",,0x01000004
+HKLM, SOFTWARE\%CompanyName%\%ProductName%\Files,"%11%\SRSLabs\%SYSFX_PREMIX_CLSID%\slmaxv64.dll",,0x01000004
+
+;;
+;; All FX\\0 entries in the same grouping
+;;
+[SysFx.AddReg]
+HKR,"FX\\0",%PKEY_DisplayName%,,%SYSFX_FriendlyName%
+HKR,"FX\\0",%PKEY_SYSFX_PreMixClsid%,,%SYSFX_PREMIX_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_PostMixClsid%,,%SYSFX_POSTMIX_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_UiClsid%,,%SYSFX_UI_CLSID%
+HKR,"FX\\0",%PKEY_SYSFX_Association%,,%KSNODETYPE_ANY%  ; GUID NULL means install on all endpoints
+                                                        ; supply a specific GUID to install on a particular bridge pin node type
+;; This is set if you need to modify the technologies which are enabled on different endpoints
+;; HKR,"FX\\0",%PKEY_SRS_TechBitmask_Property%,0x00010001,%TECH_BITMASK%
+
+;; FOR DEVELOPMENT ONLY - SIGNED DRIVERS DO NOT DO THIS
+;;
+;; Set the unprotected flag to support unsigned APOs.
+;;HKLM,%DisableProtectedAudioKey%,%DisableProtectedAudioValue%,%REG_DWORD%,1
+
+;; SRS-specific values.
+HKLM,%SRS_APO_Key%,%PKEY_SRS_Enable_LFX%,%REG_DWORD%,1
+HKLM,%SRS_APO_Key%,%PKEY_SRS_CurrentTech%,%REG_DWORD%,1            ; WOWHD
+HKLM,%SRS_APO_Key%,%PKEY_SRS_UserContentType%,%REG_DWORD%,1        ; Music
+HKLM,%SRS_APO_Key%,%PKEY_SRS_BypassGain%,%REG_DWORD%,0
+HKLM,%SRS_APO_Key%,%PKEY_SRS_PassThrough%,%REG_DWORD%,0
+HKLM,%SRS_APO_Key%,%PKEY_SRS_TechBitmask%,%REG_DWORD%,%TECH_BITMASK%
+HKLM,%SRS_APO_Key%,%PKEY_SRS_SupplementalProcess%,%REG_DWORD%,4    ; MaxV
+HKLM,%SRS_APO_Key%,%PKEY_SRS_SpeakerMode%,%REG_DWORD%,1            ; Notebook/Internal
+HKLM,%SRS_APO_Key%,%PKEY_SRS_VIPP_Override%,%REG_DWORD%,0          ; Disabled
+
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Enable%,%REG_DWORD%,1
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Input_Gain%,%REG_DWORD%,-6
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Bypass_Gain%,%REG_DWORD%,-6
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Output_Mode%,%REG_DWORD%,0
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_TruBass_Level%,%REG_DWORD%,60
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_TruBass_Size%,%REG_DWORD%,1
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Definition_Level%,%REG_DWORD%,10
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_SRS_Enable%,%REG_DWORD%,1
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_SRS_Mode%,%REG_DWORD%,0
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Center_Level%,%REG_DWORD%,50
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Space_Level%,%REG_DWORD%,50
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Focus_Level%,%REG_DWORD%,40
+HKLM,%SRS_WOWHD_APO_Key%,%PKEY_SRS_WOWHD_Limiter_Level%,%REG_DWORD%,75
+
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Enable%,%REG_DWORD%,1
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Input_Gain%,%REG_DWORD%,-6
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Bypass_Gain%,%REG_DWORD%,-6
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Output_Mode%,%REG_DWORD%,0
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_TruBass_Enable%,%REG_DWORD%,1
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_TruBass_Level%,%REG_DWORD%,60
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_TruBass_Size%,%REG_DWORD%,1
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Definition_Level%,%REG_DWORD%,10
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_DialogClarity_Level%,%REG_DWORD%,40
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Surround_Level%,%REG_DWORD%,50
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_SRS_Enable%,%REG_DWORD%,1
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_SRS_Mode%,%REG_DWORD%,1
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Center_Level%,%REG_DWORD%,50
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Space_Level%,%REG_DWORD%,50
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Focus_Level%,%REG_DWORD%,40
+HKLM,%SRS_TSHD_APO_Key%,%PKEY_SRS_TSHD_Limiter_Level%,%REG_DWORD%,75
+HKLM,%SRS_TSHD_APO_Key%,"{548FF929-057B-46F1-8FB8-5019BF2ED146},21",%REG_DWORD%,20 ; Definition Center
+HKLM,%SRS_TSHD_APO_Key%,"{548FF929-057B-46F1-8FB8-5019BF2ED146},4",%REG_DWORD%,0x00000000 ; Speaker Type
+HKLM,%SRS_TSHD_APO_Key%,"{548FF929-057B-46F1-8FB8-5019BF2ED146},17",%REG_DWORD%,0x00000001 ; Sub Crossover
+HKLM,%SRS_TSHD_APO_Key%,"{548FF929-057B-46F1-8FB8-5019BF2ED146},18",%REG_DWORD%,0x00000001 ; Sub TruBass Enable
+HKLM,%SRS_TSHD_APO_Key%,"{548FF929-057B-46F1-8FB8-5019BF2ED146},19",%REG_DWORD%,60 ; Sub Trubass Level
+HKLM,%SRS_TSHD_APO_Key%,"{548FF929-057B-46F1-8FB8-5019BF2ED146},20",%REG_DWORD%,1 ; Sub Trubass Speaker
+
+HKLM,%SRS_APO_CSHP_Key%,%PKEY_SRS_CSHP_Enable%,%REG_DWORD%,1
+HKLM,%SRS_APO_CSHP_Key%,%PKEY_SRS_CSHP_Input_Gain%,%REG_DWORD%,-6
+HKLM,%SRS_APO_CSHP_Key%,%PKEY_SRS_CSHP_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSHP_Key%,%PKEY_SRS_CSHP_Bypass_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSHP_Key%,%PKEY_SRS_CSHP_TruBass_Level%,%REG_DWORD%,30
+HKLM,%SRS_APO_CSHP_Key%,%PKEY_SRS_CSHP_TruBass_Size%,%REG_DWORD%,1
+HKLM,%SRS_APO_CSHP_Key%,%PKEY_SRS_CSHP_Definition_Level%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSHP_Key%,%PKEY_SRS_CSHP_DialogClarity_Level%,%REG_DWORD%,0
+
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Input_Gain%,%REG_DWORD%,-3
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Output_Mode%,%REG_DWORD%,1
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Mode%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_TruBass_Level%,%REG_DWORD%,60
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_TruBass_Size%,%REG_DWORD%,1
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_DialogClarity_Level%,%REG_DWORD%,40
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Output_Gain_Left%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Output_Gain_Right%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Output_Gain_Center%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Output_Gain_Sub%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Output_Gain_LeftSurr%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSII_Key%,%PKEY_SRS_CSII_Output_Gain_RightSurr%,%REG_DWORD%,0
+
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_Enable%,%REG_DWORD%,1
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_Enh_Input_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_Enh_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_TruBass_Enable%,%REG_DWORD%,1
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_TruBass_Level%,%REG_DWORD%,50
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_TruBass_Size%,%REG_DWORD%,2
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_Definition_Level%,%REG_DWORD%,20
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_Focus_Level%,%REG_DWORD%,0
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_VIP_Input_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_VIP_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_VIP_Level%,%REG_DWORD%,60
+HKLM,%SRS_APO_VOICE_Key%,%PKEY_SRS_SRSVoice_VIP_FullBand%,%REG_DWORD%,1
+
+HKLM,%SRS_APO_HP360_Key%,%PKEY_SRS_HP360_Enable%,%REG_DWORD%,1
+HKLM,%SRS_APO_HP360_Key%,%PKEY_SRS_HP360_Input_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_HP360_Key%,%PKEY_SRS_HP360_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_HP360_Key%,%PKEY_SRS_HP360_Bypass_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_HP360_Key%,%PKEY_SRS_HP360_TruBass_Level%,%REG_DWORD%,30
+HKLM,%SRS_APO_HP360_Key%,%PKEY_SRS_HP360_TruBass_Size%,%REG_DWORD%,1
+HKLM,%SRS_APO_HP360_Key%,%PKEY_SRS_HP360_DefinitionLevel%,%REG_DWORD%,20
+HKLM,%SRS_APO_HP360_Key%,%PKEY_SRS_HP360_DialogClarityLevel%,%REG_DWORD%,40
+
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_Enable%,%REG_DWORD%,1
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_Input_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_Bypass_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_TruBass_Level%,%REG_DWORD%,30
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_TruBass_Size%,%REG_DWORD%,1
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_DefinitionLevel%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_DialogClarityLevel%,%REG_DWORD%,0
+HKLM,%SRS_APO_CSHP360_Key%,%PKEY_SRS_CSHP360_CS_Mode%,%REG_DWORD%,1
+
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_Enable%,%REG_DWORD%,1
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_Input_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_Bypass_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_31%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_62%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_125%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_250%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_500%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_1k%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_2k%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_4k%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_8k%,%REG_DWORD%,0
+HKLM,%SRS_APO_GEQ_Key%,%PKEY_SRS_GEQ_16k%,%REG_DWORD%,0
+
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_Enable%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_Input_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_Bypass_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_VC_Enable%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_VC_Ref_Level%,%REG_DWORD%,100
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_VC_Mode%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_LoFilter_Enable%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_LoFilter_Freq%,%REG_DWORD%,100
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_LoFilter_Order%,%REG_DWORD%,5
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_HiFilter_Enable%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_HiFilter_Freq%,%REG_DWORD%,18000
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_HiFilter_Order%,%REG_DWORD%,5
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_AntiClip_Enable%,%REG_DWORD%,0
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_AntiClip_Level%,%REG_DWORD%,50
+HKLM,%SRS_APO_MAXV_Key%,%PKEY_SRS_MaxV_PEQ_Master_Enable%,%REG_DWORD%,0
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},15",%REG_DWORD%,0x00000000 ; PEQ Ch Enable
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},16",%REG_DWORD%,0x00000000 ; PEQ Band Enable 1
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},20",%REG_DWORD%,0x00000000 ; PEQ Band Enable 2
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},24",%REG_DWORD%,0x00000000 ; PEQ Band Enable 3
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},28",%REG_DWORD%,0x00000000 ; PEQ Band Enable 4
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},17",%REG_DWORD%,0x00E100E1 ; PEQ Band Q 1
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},21",%REG_DWORD%,0x00E100E1 ; PEQ Band Q 2
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},25",%REG_DWORD%,0x00E100E1 ; PEQ Band Q 3
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},29",%REG_DWORD%,0x00E100E1 ; PEQ Band Q 4
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},18",%REG_DWORD%,0x1F401F40 ; PEQ Band Freq 1
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},22",%REG_DWORD%,0x1F401F40 ; PEQ Band Freq 2
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},26",%REG_DWORD%,0x1F401F40 ; PEQ Band Freq 3
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},30",%REG_DWORD%,0x1F401F40 ; PEQ Band Freq 4
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},19",%REG_DWORD%,0x00000000 ; PEQ Band Gain 1
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},23",%REG_DWORD%,0x00000000 ; PEQ Band Gain 2
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},27",%REG_DWORD%,0x00000000 ; PEQ Band Gain 3
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},31",%REG_DWORD%,0x00000000 ; PEQ Band Gain 4
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},32",%REG_DWORD%,0x00000040 ; Max Gain
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},33",%REG_DWORD%,0x00000000 ; NM Enable
+HKLM,"Software\SRS Labs\APO\MaxV","{DFE89419-D77E-4A7A-886C-1E5CF9157F0A},34",%REG_DWORD%,0x00000064 ; NM Threshold
+
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Enable%,%REG_DWORD%,0
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Input_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Output_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Bypass_Gain%,%REG_DWORD%,0
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Reference_Level%,%REG_DWORD%,-6
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Mode%,%REG_DWORD%,0
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Max_Gain%,%REG_DWORD%,25600
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Speaker_Size%,%REG_DWORD%,0
+HKLM,%SRS_APO_VolumeIQ_Key%,%PKEY_SRS_VolumeIQ_Normalize_Enable%,%REG_DWORD%,0
+
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},1",%REG_DWORD%,0xFFFFFFFD ; Input Gain
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},2",%REG_DWORD%,0x00000000 ; Output Gain
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},4",%REG_DWORD%,0x00000001 ; Full Band
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},5",%REG_DWORD%,0x00000001 ; Anticlip Enable
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},6",%REG_DWORD%,0x0000001E ; VIP Control (non-adaptive)
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},7",%REG_DWORD%,0x00000001 ; Adaptive Enable
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},8",%REG_DWORD%,0x00000050 ; Env. Sens. (adaptive)
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},9",%REG_DWORD%,0x0000005A ; Input Sens. (adaptive)
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},10",%REG_DWORD%,0x00000000 ; Extra VIP Control (adaptive)
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},11",%REG_DWORD%,0x00000000 ; Env. Level - dB (adaptive)
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},13",%REG_DWORD%,0x00000001 ; Enhancements
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},14",%REG_DWORD%,0xFFFFFFFA ; Enh Input Gain
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},15",%REG_DWORD%,0x00000000 ; Enh Output Gain
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},16",%REG_DWORD%,0x00000000 ; Enh Bypass Gain
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},17",%REG_DWORD%,0x00000001 ; TruBass Enable
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},19",%REG_DWORD%,0x00000046 ; Trubass Level
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},18",%REG_DWORD%,0x00000002 ; Trubass Speaker
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},20",%REG_DWORD%,0x00000014 ; Definition
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},21",%REG_DWORD%,0x00000000 ; Dialog Clarity
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},22",%REG_DWORD%,0x00000001 ; Mic Vox Detect Enable
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},23",%REG_DWORD%,0x00000001 ; Vox Detect Enable
+HKLM,"%SRS_APO_VIPPlus_Key%","{447C6BF5-9D8A-42A4-8107-56AF50900C5B},24",%REG_DWORD%,0x00000001 ; Correlator Sensitivity
+
+;;
+;; All EP\\0 entries in the same grouping
+;;
+;; Set default format to 48kHz, 16-bit, Stereo
+;; Add endpoint extension property page
+;;
+[OEMSettingsOverride.AddReg]
+HKR,"EP\\0", %PKEY_AudioEndpoint_Association%,,%KSNODETYPE_SPEAKER%
+HKR,"EP\\0", %PKEY_AudioEngine_OEMFormat%, %REG_BINARY%, 41,00,8C,70,28,00,00,00,FE,FF,02,00,80,BB,00,00,00,EE,02,00,04,00,10,00,16,00,10,00,03,00,00,00,01,00,00,00,00,00,10,00,80,00,00,AA,00,38,9B,71
+HKR,"EP\\0", %PKEY_AudioEndpoint_Ext_UiClsid%,,%AUDIOENDPOINT_EXT_UI_CLSID%
+HKR,"EP\\0", %PKEY_AudioEndpoint_Disable_SysFx%,%REG_DWORD%,0
+HKR,"EP\\0", %PKEY_AudioEndpoint_SRS_UAPO_IsInstalled%,%REG_DWORD%,1
+
+;;
+;; Copy custom SYSFX and property page
+;;
+[SysFx.NTx86.CopyList]
+slInit32.dll,,,
+sluapo32.dll,,,
+slprop32.dll,,,
+sltshd32.dll,,,
+slcshp32.dll,,,
+slh36032.dll,,,
+slmaxv32.dll,,,
+
+[SysFx.NTamd64.CopyList]
+slInit64.dll,,,
+sluapo64.dll,,,
+slprop64.dll,,,
+sltshd64.dll,,,
+slcshp64.dll,,,
+slh36064.dll,,,
+slmaxv64.dll,,,
+
+;;
+;; Uninstaller AddReg
+;;
+[Uninstaller.NTx86.AddReg]
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SRSAudioID%,DisplayName,,%SRSAudioID%
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SRSAudioID%,DisplayIcon,,%16422%\SRSLabs\%SRSAudioID%\UIU32a.exe
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SRSAudioID%,UninstallString,,%16422%\SRSLabs\%SRSAudioID%\UIU32a.exe -U -ISRS_APO_Universal_Conexant_PremSound.INF
+
+[Uninstaller.NTamd64.AddReg]
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SRSAudioID%,DisplayName,,%SRSAudioID%
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SRSAudioID%,DisplayIcon,,%16422%\SRSLabs\%SRSAudioID%\UIU64a.exe
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SRSAudioID%,UninstallString,,%16422%\SRSLabs\%SRSAudioID%\UIU64a.exe -U -ISRS_APO_Universal_Conexant_PremSound.INF
+
+;;
+;; Copy Uninstaller File
+;;
+[Uninstaller.NTx86.CopyFiles]
+UIU32a.exe,,,
+
+[Uninstaller.NTamd64.CopyFiles]
+UIU64a.exe,,,
+
+;;
+;; Register custom SYSFX and property page
+;;
+[SysFx.NTx86.RegisterDlls]
+11,SRSLabs\%SYSFX_PREMIX_CLSID%,sluapo32.dll,1
+11,SRSLabs\%SYSFX_PREMIX_CLSID%,slprop32.dll,1
+
+[SysFx.NTamd64.RegisterDlls]
+11,SRSLabs\%SYSFX_PREMIX_CLSID%,sluapo64.dll,1
+11,SRSLabs\%SYSFX_PREMIX_CLSID%,slprop64.dll,1
+
+[Strings]
+ProviderName="SRS Labs, Inc."
+MfgName="SRS Labs, Inc."
+DiskDescription="SRS Premium Sound APO for Conexant USB Audio"
+SRSAudioID="SRS Premium Sound APO for Conexant USB Audio"
+CompanyName = "Conexant"
+ProductName = "SRS Premium Sound APO for Conexant USB Audio"
+
+;;
+;; These are the strings passed to PcRegisterSubdevice for wave ports
+;;
+KSNAME_eLineOutWave = "GLOBAL"
+KSNAME_eLineOutTopo = "GLOBAL"
+
+;;
+;; These are the name strings for the wave miniports displayed in mmsys.cpl
+;;
+PrimarySpeakerWaveDeviceName  = "USB Audio Speaker"
+PrimarySpeakerTopoDeviceName  = "USB Audio Speaker mixer"
+
+
+;;
+;; PropertyKey GUIDS
+;;
+PKEY_SYSFX_Association            = "{D04E05A6-594B-4FB6-A80D-01AF5EED7D1D},0"
+PKEY_SYSFX_PreMixClsid            = "{D04E05A6-594B-4FB6-A80D-01AF5EED7D1D},1"
+PKEY_SYSFX_PostMixClsid           = "{D04E05A6-594B-4FB6-A80D-01AF5EED7D1D},2"
+PKEY_SYSFX_UiClsid                = "{D04E05A6-594B-4FB6-A80D-01AF5EED7D1D},3"
+PKEY_DisplayName                  = "{B725F130-47EF-101A-A5F1-02608C9EEBAC},10"
+PKEY_AudioEndpoint_Ext_UiClsid    = "{1DA5D803-D492-4EDD-8C23-E0C0FFEE7F0E},1"
+PKEY_AudioEndpoint_Association    = "{1DA5D803-D492-4EDD-8C23-E0C0FFEE7F0E},2"
+PKEY_AudioEndpoint_Disable_SysFx  = "{1DA5D803-D492-4EDD-8C23-E0C0FFEE7F0E},5"
+PKEY_AudioEndpoint_SRS_UAPO_IsInstalled = "{59CB4A93-050A-4246-925E-AFD78F2D081A},0"
+PKEY_AudioEndpoint_SRS_UAPO_TuningFile  = "{59CB4A93-050A-4246-925E-AFD78F2D081A},1"
+
+;; SRS-specific GUIDs and registry keys.
+SRS_APO_Key					        = "Software\SRS Labs\APO"
+PKEY_SRS_Enable_LFX                 = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},0"
+PKEY_SRS_CurrentTech                = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},1"
+PKEY_SRS_UserContentType            = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},2"
+PKEY_SRS_BypassGain                 = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},3"
+PKEY_SRS_PassThrough                = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},4"
+PKEY_SRS_TechBitmask                = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},5"
+PKEY_SRS_SupplementalProcess        = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},6"
+PKEY_SRS_SpeakerMode                = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},9"
+PKEY_SRS_VIPP_Override              = "{66E88EA2-A239-4e1f-82FF-2F45359AEC94},13"
+
+SRS_WOWHD_APO_Key                   = "Software\SRS Labs\APO\WOW HD"
+PKEY_SRS_WOWHD_Enable				= "{7542A688-914F-465d-A11A-4D6A109013A2},0"
+PKEY_SRS_WOWHD_Input_Gain			= "{7542A688-914F-465d-A11A-4D6A109013A2},1"
+PKEY_SRS_WOWHD_Output_Gain			= "{7542A688-914F-465d-A11A-4D6A109013A2},2"
+PKEY_SRS_WOWHD_Bypass_Gain			= "{7542A688-914F-465d-A11A-4D6A109013A2},3"
+PKEY_SRS_WOWHD_TruBass_Level		= "{7542A688-914F-465d-A11A-4D6A109013A2},4"
+PKEY_SRS_WOWHD_TruBass_Size			= "{7542A688-914F-465d-A11A-4D6A109013A2},5"
+PKEY_SRS_WOWHD_Definition_Level		= "{7542A688-914F-465d-A11A-4D6A109013A2},6"
+PKEY_SRS_WOWHD_SRS_Enable			= "{7542A688-914F-465d-A11A-4D6A109013A2},7"
+PKEY_SRS_WOWHD_SRS_Mode				= "{7542A688-914F-465d-A11A-4D6A109013A2},8"
+PKEY_SRS_WOWHD_Output_Mode			= "{7542A688-914F-465d-A11A-4D6A109013A2},9"
+PKEY_SRS_WOWHD_Center_Level			= "{7542A688-914F-465d-A11A-4D6A109013A2},10"
+PKEY_SRS_WOWHD_Space_Level			= "{7542A688-914F-465d-A11A-4D6A109013A2},11"
+PKEY_SRS_WOWHD_Focus_Level			= "{7542A688-914F-465d-A11A-4D6A109013A2},12"
+PKEY_SRS_WOWHD_Limiter_Level		= "{7542A688-914F-465d-A11A-4D6A109013A2},13"
+
+SRS_TSHD_APO_Key					= "Software\SRS Labs\APO\TruSurround HD"
+PKEY_SRS_TSHD_Enable				= "{548FF929-057B-46f1-8FB8-5019BF2ED146},0"
+PKEY_SRS_TSHD_Input_Gain			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},1"
+PKEY_SRS_TSHD_Output_Gain			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},2"
+PKEY_SRS_TSHD_Bypass_Gain			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},3"
+PKEY_SRS_TSHD_Output_Mode			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},4"
+PKEY_SRS_TSHD_TruBass_Level			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},5"
+PKEY_SRS_TSHD_TruBass_Size			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},6"
+PKEY_SRS_TSHD_Definition_Level		= "{548FF929-057B-46f1-8FB8-5019BF2ED146},7"
+PKEY_SRS_TSHD_DialogClarity_Level	= "{548FF929-057B-46f1-8FB8-5019BF2ED146},8"
+PKEY_SRS_TSHD_Surround_Level		= "{548FF929-057B-46f1-8FB8-5019BF2ED146},9"
+PKEY_SRS_TSHD_SRS_Enable			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},10"
+PKEY_SRS_TSHD_SRS_Mode				= "{548FF929-057B-46f1-8FB8-5019BF2ED146},11"
+PKEY_SRS_TSHD_Center_Level			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},12"
+PKEY_SRS_TSHD_Space_Level			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},13"
+PKEY_SRS_TSHD_Focus_Level			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},14"
+PKEY_SRS_TSHD_Limiter_Level			= "{548FF929-057B-46f1-8FB8-5019BF2ED146},15"
+PKEY_SRS_TSHD_TruBass_Enable		= "{548FF929-057B-46f1-8FB8-5019BF2ED146},16"
+
+SRS_APO_CSHP_Key                    = "Software\SRS Labs\APO\CS Headphone"
+PKEY_SRS_CSHP_Enable                = "{C52A5863-6FA5-4b40-AEC6-436AE9E5C228},0"
+PKEY_SRS_CSHP_Input_Gain            = "{C52A5863-6FA5-4b40-AEC6-436AE9E5C228},1"
+PKEY_SRS_CSHP_Output_Gain           = "{C52A5863-6FA5-4b40-AEC6-436AE9E5C228},2"
+PKEY_SRS_CSHP_Bypass_Gain           = "{C52A5863-6FA5-4b40-AEC6-436AE9E5C228},3"
+PKEY_SRS_CSHP_TruBass_Level         = "{C52A5863-6FA5-4b40-AEC6-436AE9E5C228},4"
+PKEY_SRS_CSHP_TruBass_Size          = "{C52A5863-6FA5-4b40-AEC6-436AE9E5C228},5"
+PKEY_SRS_CSHP_Definition_Level      = "{C52A5863-6FA5-4b40-AEC6-436AE9E5C228},6"
+PKEY_SRS_CSHP_DialogClarity_Level   = "{C52A5863-6FA5-4b40-AEC6-436AE9E5C228},7"
+
+SRS_APO_CSII_Key                    = "Software\SRS Labs\APO\CSII"
+PKEY_SRS_CSII_Input_Gain            = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},0"
+PKEY_SRS_CSII_Output_Mode           = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},1"
+PKEY_SRS_CSII_Mode                  = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},2"
+PKEY_SRS_CSII_TruBass_Level         = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},3"
+PKEY_SRS_CSII_TruBass_Size          = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},4"
+PKEY_SRS_CSII_DialogClarity_Level   = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},5"
+PKEY_SRS_CSII_Output_Gain_Left      = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},6"
+PKEY_SRS_CSII_Output_Gain_Right     = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},7"
+PKEY_SRS_CSII_Output_Gain_Center    = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},8"
+PKEY_SRS_CSII_Output_Gain_Sub       = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},9"
+PKEY_SRS_CSII_Output_Gain_LeftSurr  = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},10"
+PKEY_SRS_CSII_Output_Gain_RightSurr = "{4D312C5C-B7B8-4818-B1C3-B5721528363A},11"
+
+SRS_APO_VOICE_Key                   = "Software\SRS Labs\APO\SRS Voice"
+PKEY_SRS_SRSVoice_Enable            = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},0"
+PKEY_SRS_SRSVoice_Enh_Input_Gain    = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},1"
+PKEY_SRS_SRSVoice_Enh_Output_Gain   = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},2"
+PKEY_SRS_SRSVoice_TruBass_Enable    = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},3"
+PKEY_SRS_SRSVoice_TruBass_Level     = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},4"
+PKEY_SRS_SRSVoice_TruBass_Size      = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},5"
+PKEY_SRS_SRSVoice_Definition_Level  = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},6"
+PKEY_SRS_SRSVoice_Focus_Level       = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},7"
+PKEY_SRS_SRSVoice_VIP_Input_Gain    = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},8"
+PKEY_SRS_SRSVoice_VIP_Output_Gain   = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},9"
+PKEY_SRS_SRSVoice_VIP_Level         = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},10"
+PKEY_SRS_SRSVoice_VIP_FullBand      = "{FBCBE8D1-FD3B-4c6a-8AB2-0E4DA20FD94E},11"
+
+SRS_APO_HP360_Key                   = "Software\SRS Labs\APO\Headphone 360"
+PKEY_SRS_HP360_Enable               = "{83744D4A-08BF-4c5f-9B7E-1FF2A9F2CFEB},0"
+PKEY_SRS_HP360_Input_Gain           = "{83744D4A-08BF-4c5f-9B7E-1FF2A9F2CFEB},1"
+PKEY_SRS_HP360_Output_Gain          = "{83744D4A-08BF-4c5f-9B7E-1FF2A9F2CFEB},2"
+PKEY_SRS_HP360_Bypass_Gain          = "{83744D4A-08BF-4c5f-9B7E-1FF2A9F2CFEB},3"
+PKEY_SRS_HP360_TruBass_Level        = "{83744D4A-08BF-4c5f-9B7E-1FF2A9F2CFEB},4"
+PKEY_SRS_HP360_TruBass_Size         = "{83744D4A-08BF-4c5f-9B7E-1FF2A9F2CFEB},5"
+PKEY_SRS_HP360_DefinitionLevel      = "{83744D4A-08BF-4c5f-9B7E-1FF2A9F2CFEB},6"
+PKEY_SRS_HP360_DialogClarityLevel   = "{83744D4A-08BF-4c5f-9B7E-1FF2A9F2CFEB},7"
+
+SRS_APO_CSHP360_Key                 = "Software\SRS Labs\APO\CSHP and Headphone 360"
+PKEY_SRS_CSHP360_Enable             = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},0"
+PKEY_SRS_CSHP360_Input_Gain         = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},1"
+PKEY_SRS_CSHP360_Output_Gain        = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},2"
+PKEY_SRS_CSHP360_Bypass_Gain        = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},3"
+PKEY_SRS_CSHP360_TruBass_Level      = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},4"
+PKEY_SRS_CSHP360_TruBass_Size       = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},5"
+PKEY_SRS_CSHP360_DefinitionLevel    = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},6"
+PKEY_SRS_CSHP360_DialogClarityLevel = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},7"
+PKEY_SRS_CSHP360_CS_Mode            = "{8713EEBC-12EE-4ccc-9357-FB195FEA8161},8"
+
+SRS_APO_GEQ_Key                     = "Software\SRS Labs\APO\GraphicEQ"
+PKEY_SRS_GEQ_Enable                 = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},0"
+PKEY_SRS_GEQ_Input_Gain             = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},1"
+PKEY_SRS_GEQ_Output_Gain            = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},2"
+PKEY_SRS_GEQ_Bypass_Gain            = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},3"
+PKEY_SRS_GEQ_31                     = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},4"
+PKEY_SRS_GEQ_62                     = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},5"
+PKEY_SRS_GEQ_125                    = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},6"
+PKEY_SRS_GEQ_250                    = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},7"
+PKEY_SRS_GEQ_500                    = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},8"
+PKEY_SRS_GEQ_1k                     = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},9"
+PKEY_SRS_GEQ_2k                     = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},10"
+PKEY_SRS_GEQ_4k                     = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},11"
+PKEY_SRS_GEQ_8k                     = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},12"
+PKEY_SRS_GEQ_16k                    = "{70D31C5B-9EAF-4d05-9B31-70E8D6B0B0AE},13"
+
+SRS_APO_MAXV_Key                    = "Software\SRS Labs\APO\MaxV"
+PKEY_SRS_MaxV_Enable                = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},0"
+PKEY_SRS_MaxV_Input_Gain            = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},1"
+PKEY_SRS_MaxV_Output_Gain           = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},2"
+PKEY_SRS_MaxV_Bypass_Gain           = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},3"
+PKEY_SRS_MaxV_VC_Enable             = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},4"
+PKEY_SRS_MaxV_VC_Ref_Level          = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},5"
+PKEY_SRS_MaxV_VC_Mode               = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},6"
+PKEY_SRS_MaxV_LoFilter_Enable       = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},7"
+PKEY_SRS_MaxV_LoFilter_Freq         = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},8"
+PKEY_SRS_MaxV_LoFilter_Order        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},9"
+PKEY_SRS_MaxV_HiFilter_Enable       = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},10"
+PKEY_SRS_MaxV_HiFilter_Freq         = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},11"
+PKEY_SRS_MaxV_HiFilter_Order        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},12"
+PKEY_SRS_MaxV_AntiClip_Enable       = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},13"
+PKEY_SRS_MaxV_AntiClip_Level        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},14"
+PKEY_SRS_MaxV_PEQ_Master_Enable     = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},15"
+PKEY_SRS_MaxV_PEQ_Band1_Enable      = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},16"
+PKEY_SRS_MaxV_PEQ_Band1_Q           = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},17"
+PKEY_SRS_MaxV_PEQ_Band1_Freq        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},18"
+PKEY_SRS_MaxV_PEQ_Band1_Gain        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},19"
+PKEY_SRS_MaxV_PEQ_Band2_Enable      = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},20"
+PKEY_SRS_MaxV_PEQ_Band2_Q           = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},21"
+PKEY_SRS_MaxV_PEQ_Band2_Freq        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},22"
+PKEY_SRS_MaxV_PEQ_Band2_Gain        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},23"
+PKEY_SRS_MaxV_PEQ_Band3_Enable      = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},24"
+PKEY_SRS_MaxV_PEQ_Band3_Q           = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},25"
+PKEY_SRS_MaxV_PEQ_Band3_Freq        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},26"
+PKEY_SRS_MaxV_PEQ_Band3_Gain        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},27"
+PKEY_SRS_MaxV_PEQ_Band4_Enable      = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},28"
+PKEY_SRS_MaxV_PEQ_Band4_Q           = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},29"
+PKEY_SRS_MaxV_PEQ_Band4_Freq        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},30"
+PKEY_SRS_MaxV_PEQ_Band4_Gain        = "{DFE89419-D77E-4a7a-886C-1E5CF9157F0A},31"
+
+SRS_APO_VolumeIQ_Key                = "Software\SRS Labs\APO\VolumeIQ"
+PKEY_SRS_VolumeIQ_Enable            = "{3B02C998-2868-4a21-9139-73D570DAF4B1},0"
+PKEY_SRS_VolumeIQ_Input_Gain        = "{3B02C998-2868-4a21-9139-73D570DAF4B1},1"
+PKEY_SRS_VolumeIQ_Output_Gain       = "{3B02C998-2868-4a21-9139-73D570DAF4B1},2"
+PKEY_SRS_VolumeIQ_Bypass_Gain       = "{3B02C998-2868-4a21-9139-73D570DAF4B1},3"
+PKEY_SRS_VolumeIQ_Reference_Level   = "{3B02C998-2868-4a21-9139-73D570DAF4B1},4"
+PKEY_SRS_VolumeIQ_Mode              = "{3B02C998-2868-4a21-9139-73D570DAF4B1},5"
+PKEY_SRS_VolumeIQ_Max_Gain          = "{3B02C998-2868-4a21-9139-73D570DAF4B1},6"
+PKEY_SRS_VolumeIQ_Speaker_Size      = "{3B02C998-2868-4a21-9139-73D570DAF4B1},7"
+PKEY_SRS_VolumeIQ_Normalize_Enable  = "{3B02C998-2868-4a21-9139-73D570DAF4B1},8"
+PKEY_SRS_VolumeIQ_Volume_Bypass_Gain = "{3B02C998-2868-4a21-9139-73D570DAF4B1},9"
+
+SRS_APO_VIPPlus_Key                 = "Software\SRS Labs\APO\VIP Plus"
+PKEY_SRS_VIPPlus_Enable             = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},0"
+PKEY_SRS_VIPPlus_Input_Gain         = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},1"
+PKEY_SRS_VIPPlus_Output_Gain        = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},2"
+PKEY_SRS_VIPPlus_Bypass_Gain        = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},3"
+PKEY_SRS_VIPPlus_Full_Band_Enable   = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},4"
+PKEY_SRS_VIPPlus_AntiClip_Enable    = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},5"
+PKEY_SRS_VIPPlus_VIP_Control        = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},6"
+PKEY_SRS_VIPPlus_Adaptive_Enable    = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},7"
+PKEY_SRS_VIPPlus_Env_Sensitivity    = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},8"
+PKEY_SRS_VIPPlus_Input_Sensitivity  = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},9"
+PKEY_SRS_VIPPlus_Extra_VIP_Control  = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},10"
+PKEY_SRS_VIPPlus_Env_Level          = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},11"
+PKEY_SRS_VIPPlus_Env_Device         = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},12" ;; string device ID
+PKEY_SRS_VIPPlus_Enh_Enable         = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},13"
+PKEY_SRS_VIPPlus_Enh_Input_Gain     = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},14"
+PKEY_SRS_VIPPlus_Enh_Output_Gain    = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},15"
+PKEY_SRS_VIPPlus_Enh_Bypass_Gain    = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},16"
+PKEY_SRS_VIPPlus_Enh_TruBass_Enable = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},17"
+PKEY_SRS_VIPPlus_Enh_TruBass_Level  = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},18"
+PKEY_SRS_VIPPlus_Enh_TruBass_Size   = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},19"
+PKEY_SRS_VIPPlus_Enh_Definition_Level = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},20"
+PKEY_SRS_VIPPlus_Enh_Focus_Level      = "{447C6BF5-9D8A-42a4-8107-56AF50900C5B},21"
+
+;;
+;; PKEY_AudioEngine_OEMFormat:  Specifies the default format that is used for rendering/capturing.
+;; vartype = VT_BLOB
+;;
+PKEY_AudioEngine_OEMFormat = "{E4870E26-3CC5-4CD2-BA46-CA0A9A70ED04},3"
+
+;; Bitmask of supported technologies - TSHD, WOWHD, CSHP, Max-V
+TECH_BITMASK = "0xDE22695D"
+
+CONTROLLER_EXT_UI_CLSID    = "{EE661557-A649-4cb5-B868-86FCC6251414}"
+
+AUDIOENDPOINT_EXT_UI_CLSID = "{6C57B2A2-91F5-4b90-93D5-FAB82485ECA6}"
+
+SYSFX_UI_CLSID      = "{3EE6CC8B-9F7F-4cea-8251-997B986E2C1F}"
+SYSFX_PREMIX_CLSID  = "{176F4E15-8F7C-4833-ADED-81FAE8CCD186}"
+SYSFX_POSTMIX_CLSID = "{00000000-0000-0000-0000-000000000000}"
+SYSFX_FriendlyName  = "Premium Sound APO for Conexant USB Audio from SRS Labs, Inc."
+
+KSCATEGORY_AUDIO    = "{6994AD04-93EF-11D0-A3CC-00A0C9223196}"
+KSCATEGORY_RENDER   = "{65E8773E-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_CAPTURE  = "{65E8773D-8F56-11D0-A3B9-00A0C9223196}"
+KSCATEGORY_TOPOLOGY = "{DDA54A40-1E4C-11D1-A050-405705C10000}"
+
+KSNODETYPE_ANY      = "{00000000-0000-0000-0000-000000000000}"
+KSNODETYPE_SPEAKER  = "{DFF21CE1-F70F-11D0-B917-00A0C9223196}"
+
+Proxy.CLSID         = "{17CCA71B-ECD7-11D0-B908-00A0C9223196}"
+
+DisableProtectedAudioKey = "Software\Microsoft\Windows\CurrentVersion\Audio"
+DisableProtectedAudioValue = "DisableProtectedAudioDG"
+
+REG_BINARY          = 0x00000001
+REG_DWORD			= 0x00010001
+
+RunOnce             = "Software\Microsoft\Windows\CurrentVersion\RunOnce"
